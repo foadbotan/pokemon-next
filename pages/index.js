@@ -1,11 +1,9 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
 import PokemonList from "../components/PokemonList";
+import Pagination from "../components/Pagination";
 
-const TOTAL_NUMBER_OF_POKEMON = 1154;
-const POKEMON_PER_PAGE = 20;
-const TOTAL_NUMBER_OF_PAGES = Math.floor(TOTAL_NUMBER_OF_POKEMON / POKEMON_PER_PAGE);
-const BASE_URL = "https://pokeapi.co/api/v2/pokemon/";
+import { BASE_URL, POKEMON_PER_PAGE } from "../constants";
 
 export default function Home() {
   const [pokemonList, setPokemonList] = useState([]);
@@ -43,25 +41,7 @@ export default function Home() {
 
       <main>
         <h1 className="text-5xl text-center m-5">Pokedex</h1>
-        <div className="space-x-3 flex justify-center items-center">
-          <button
-            className="py-2 px-3 rounded bg-green-600 disabled:bg-gray-200"
-            onClick={handlePreviousPage}
-            disabled={previousPage === null}
-          >
-            &lt;
-          </button>
-          <p>
-            Page {page + 1} of {TOTAL_NUMBER_OF_PAGES + 1}
-          </p>
-          <button
-            className="py-2 px-3 rounded bg-green-600 disabled:bg-gray-200"
-            onClick={handleNextPage}
-            disabled={nextPage === null}
-          >
-            &gt;
-          </button>
-        </div>
+        <Pagination {...{ handleNextPage, handlePreviousPage, nextPage, previousPage, page }} />
         <PokemonList pokemonList={pokemonList} />
       </main>
     </div>
