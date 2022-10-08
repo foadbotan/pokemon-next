@@ -2,9 +2,9 @@ import Pokemon from "./Pokemon";
 
 export default function PokemonList({ pokemonList }) {
   return (
-    <div>
+    <div className="flex flex-wrap justify-center gap-10">
       {pokemonList.map((pokemon) => (
-        <Pokemon key={pokemon.name} pokemon={pokemon} />
+        <Pokemon key={pokemon.name} {...pokemon} />
       ))}
     </div>
   );
