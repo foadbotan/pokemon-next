@@ -5,6 +5,7 @@ export default function Pokemon({ url, name }) {
   const [loading, setLoading] = useState(true);
   const [image, setImage] = useState("");
   const [abilities, setAbilities] = useState("");
+  const [type, setType] = useState("");
 
   useEffect(() => {
     fetch(url)
@@ -13,6 +14,7 @@ export default function Pokemon({ url, name }) {
         setLoading(false);
         setImage(data.sprites.other["official-artwork"].front_default);
         setAbilities(data.abilities.map(({ ability }) => ability.name));
+        setType(data.types.map(({ type }) => type.name));
       });
   }, [url]);
 
@@ -27,7 +29,11 @@ export default function Pokemon({ url, name }) {
       </div>
       <div className="-mt-5 p-3">
         <p className="text-xs tracking-widest text-gray-500">Abilities:</p>
-        <p className="font-semibold capitalize">{abilities.join(", ")}</p>
+        <p className="capitalize">{abilities.join(", ")}</p>
+      </div>
+      <div className="-mt-5 p-3">
+        <p className="text-xs tracking-widest text-gray-500">Type::</p>
+        <p className="capitalize">{type.join(", ")}</p>
       </div>
     </div>
   );
