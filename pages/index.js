@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import PokemonList from "../components/PokemonList";
 
-const URL = `https://pokeapi.co/api/v2/pokemon?offset=0&limit=10`;
+const URL = `https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`;
 
 export async function getStaticProps() {
   const res = await fetch(URL);
@@ -53,7 +53,7 @@ export default function Home({ next, results }) {
     setIsLoading(true);
     fetch(url)
       .then((res) => res.json())
-      .then(({ next, previous, results }) => {
+      .then(({ next, results }) => {
         setPokemonList((prevPokemonList) => [...prevPokemonList, ...results]);
         setNextPage(next);
         setIsLoading(false);
@@ -72,7 +72,7 @@ export default function Home({ next, results }) {
 
         {isLoading === false && (
           <div ref={ref} className="bg-gray-200 p-4">
-            Loading More...
+            {nextPage ? "Loading More..." : "No More Pokemon"}
           </div>
         )}
       </main>
