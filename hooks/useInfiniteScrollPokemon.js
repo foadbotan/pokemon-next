@@ -7,7 +7,7 @@ export default function useInfiniteScrollPokemon(next, results) {
 
   const ref = useRef(null);
 
-  function fetchPokemon(url) {
+  function fetchMorePokemon(url) {
     setIsLoading(true);
     fetch(url)
       .then((res) => res.json())
@@ -19,14 +19,10 @@ export default function useInfiniteScrollPokemon(next, results) {
   }
 
   useEffect(() => {
-    function handleNextPage() {
-      if (nextPage) fetchPokemon(nextPage);
-    }
-
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          handleNextPage();
+        if (entry.isIntersecting && nextPage) {
+          fetchMorePokemon(nextPage);
         }
       },
       {
@@ -37,14 +33,10 @@ export default function useInfiniteScrollPokemon(next, results) {
     );
 
     const currentRef = ref.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
+    if (currentRef) observer.observe(currentRef);
 
     return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
+      if (currentRef) observer.unobserve(currentRef);
     };
   }, [ref, nextPage]);
 
