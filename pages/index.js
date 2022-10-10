@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react";
 import Head from "next/head";
 import PokemonList from "../components/PokemonList";
+import useInfiniteScrollPokemon from "../hooks/useInfiniteScrollPokemon";
 
 const URL = `https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`;
 
@@ -13,52 +13,7 @@ export async function getStaticProps() {
 }
 
 export default function Home({ next, results }) {
-  const [isLoading, setIsLoading] = useState(false);
-  const [pokemonList, setPokemonList] = useState(results);
-  const [nextPage, setNextPage] = useState(next);
-
-  const ref = useRef(null);
-
-  useEffect(() => {
-    function handleNextPage() {
-      if (nextPage) fetchPokemon(nextPage);
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          handleNextPage();
-        }
-      },
-      {
-        root: null,
-        rootMargin: "0px",
-        threshold: 1.0,
-      }
-    );
-
-    const currentRef = ref.current;
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, [ref, nextPage]);
-
-  function fetchPokemon(url) {
-    setIsLoading(true);
-    fetch(url)
-      .then((res) => res.json())
-      .then(({ next, results }) => {
-        setPokemonList((prevPokemonList) => [...prevPokemonList, ...results]);
-        setNextPage(next);
-        setIsLoading(false);
-      });
-  }
+  const { isLoading, pokemonList, ref, nextPage } = useInfiniteScrollPokemon(next, results);
 
   return (
     <div>
