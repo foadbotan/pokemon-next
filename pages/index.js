@@ -2,22 +2,24 @@ import { useState, useEffect } from "react";
 import Head from "next/head";
 import PokemonList from "../components/PokemonList";
 
-const POKEMON_PER_PAGE = 20;
-const URL = `https://pokeapi.co/api/v2/pokemon?offset=0&limit=${POKEMON_PER_PAGE}`;
+const URL = `https://pokeapi.co/api/v2/pokemon?offset=0&limit=6`;
 
-export default function Home() {
-  const [pokemonList, setPokemonList] = useState([]);
-  const [nextPage, setNextPage] = useState("");
-  const [previousPage, setPreviousPage] = useState("");
+export async function getStaticProps() {
+  const res = await fetch(URL);
+  const data = await res.json();
 
-  useEffect(() => {
-    fetchPokemon(URL);
-  }, []);
+  return {
+    props: {
+      data,
+    },
+  };
+}
 
-  function handlePreviousPage() {
-    if (previousPage === null) return;
-    fetchPokemon(previousPage);
-  }
+export default function Home({ data: { next, previous, results } }) {
+  const [pokemonList, setPokemonList] = useState(results);
+  const [nextPage, setNextPage] = useState(next);
+
+  console.log(pokemonList);
 
   function handleNextPage() {
     if (nextPage === null) return;
@@ -28,7 +30,7 @@ export default function Home() {
     fetch(url)
       .then((res) => res.json())
       .then((data) => {
-        setPokemonList(data.results);
+        setPokemonList((prevPokemonList) => [...prevPokemonList, ...data.results]);
         setNextPage(data.next);
         setPreviousPage(data.previous);
       });
@@ -40,15 +42,13 @@ export default function Home() {
         <title>Pokedex</title>
       </Head>
 
-      <main>
-        <h1 className="m-5 text-center text-5xl">Pokedex</h1>
-        <button onClick={handlePreviousPage} className="m-3 bg-gray-200 p-4">
-          &#60;
-        </button>
-        <button onClick={handleNextPage} className="m-3 bg-gray-200 p-4">
-          &#62;
-        </button>
+      <main className="flex flex-col items-center gap-5">
+        <h1 className="m-5 text-5xl">Pokedex</h1>
         <PokemonList pokemonList={pokemonList} />
+
+        <button onClick={handleNextPage} className="m-3 bg-gray-200 p-4">
+          More
+        </button>
       </main>
     </div>
   );
