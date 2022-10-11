@@ -1,19 +1,61 @@
-import Head from "next/head";
-import PokemonList from "../components/PokemonList";
-import useInfiniteScrollPokemon from "../hooks/useInfiniteScrollPokemon";
+import { useEffect, useRef, useState } from "react";
 
-const URL = `https://pokeapi.co/api/v2/pokemon?offset=0&limit=20`;
+import Head from "next/head";
+import Pokemon from "../components/Pokemon";
+
+const URL = `https://pokeapi.co/api/v2/pokemon?limit=1154`;
 
 export async function getStaticProps() {
   const res = await fetch(URL);
   const data = await res.json();
   return {
-    props: data,
+    props: {
+      allPokemon: data.results,
+    },
   };
 }
 
-export default function Home({ next, results }) {
-  const { isLoading, pokemonList, ref, nextPage } = useInfiniteScrollPokemon(next, results);
+export default function Home({ allPokemon }) {
+  const [filter, setFilter] = useState("");
+  const [filteredPokemon, setFilteredPokemon] = useState(
+    allPokemon.filter((pokemon) => new RegExp(filter, "i").test(pokemon.name))
+  );
+  const [pokemonList, setPokemonList] = useState(filteredPokemon.slice(0, 5));
+  const ref = useRef(null);
+
+  useEffect(() => {
+    setFilteredPokemon(allPokemon.filter((pokemon) => new RegExp(filter, "i").test(pokemon.name)));
+    setPokemonList([]);
+  }, [filter, allPokemon]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          loadMorePokemon();
+        }
+      },
+      {
+        root: null,
+        rootMargin: "0px",
+        threshold: 1.0,
+      }
+    );
+
+    function loadMorePokemon() {
+      setPokemonList((prevList) => [
+        ...prevList,
+        ...filteredPokemon.slice(prevList.length, prevList.length + 5),
+      ]);
+    }
+
+    const currentRef = ref.current;
+    if (currentRef) observer.observe(currentRef);
+
+    return () => {
+      if (currentRef) observer.unobserve(currentRef);
+    };
+  }, [filteredPokemon, pokemonList]);
 
   return (
     <div>
@@ -23,13 +65,15 @@ export default function Home({ next, results }) {
 
       <main className="flex flex-col items-center gap-10 p-5">
         <h1 className=" text-5xl">Pokedex</h1>
-        <PokemonList pokemonList={pokemonList} />
+        <input value={filter} onChange={(e) => setFilter(e.target.value)} />
+        <p>{filter}</p>
+        <div className="flex flex-wrap justify-center gap-10">
+          {pokemonList.map((pokemon, index) => {
+            return <Pokemon key={pokemon.name} {...pokemon} />;
+          })}
+        </div>
 
-        {isLoading === false && (
-          <div ref={ref} className="bg-gray-200 p-4">
-            {nextPage ? "Loading More..." : "No More Pokemon"}
-          </div>
-        )}
+        <div ref={ref}></div>
       </main>
     </div>
   );
