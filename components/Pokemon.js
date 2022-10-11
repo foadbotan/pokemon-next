@@ -20,6 +20,8 @@ export default function Pokemon({ url, name }) {
 
   if (loading) return null;
 
+  if (!image || !abilities || !type) return null;
+
   return (
     <div className="flex w-60 flex-col rounded-lg bg-white shadow-md">
       <h2 className="-mb-5 pt-5 text-center text-4xl font-bold capitalize">{name}</h2>
