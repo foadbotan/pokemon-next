@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import Pokemon from "../components/Pokemon";
 
-const URL = `https://pokeapi.co/api/v2/pokemon?limit=1154`;
+const URL = `https://pokeapi.co/api/v2/pokemon?limit=-1`;
 
 export async function getStaticProps() {
   const res = await fetch(URL);
@@ -16,23 +16,28 @@ export async function getStaticProps() {
 }
 
 export default function Home({ allPokemon }) {
-  const [filter, setFilter] = useState("");
-  const [filteredPokemon, setFilteredPokemon] = useState(
-    allPokemon.filter((pokemon) => new RegExp(filter, "i").test(pokemon.name))
-  );
-  const [pokemonList, setPokemonList] = useState(filteredPokemon.slice(0, 5));
+  const [search, setSearch] = useState("");
+  const [filteredPokemon, setFilteredPokemon] = useState([]);
+  const [pokemonList, setPokemonList] = useState([]);
   const ref = useRef(null);
 
   useEffect(() => {
-    setFilteredPokemon(allPokemon.filter((pokemon) => new RegExp(filter, "i").test(pokemon.name)));
+    const includesSearchString = (pokemon) => new RegExp(search, "i").test(pokemon.name);
+    setFilteredPokemon(allPokemon.filter(includesSearchString));
     setPokemonList([]);
-  }, [filter, allPokemon]);
+  }, [search, allPokemon]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          loadMorePokemon();
+          setPokemonList((prevPokemonList) => {
+            const nextPokemon = filteredPokemon.slice(
+              prevPokemonList.length,
+              prevPokemonList.length + 10
+            );
+            return [...prevPokemonList, ...nextPokemon];
+          });
         }
       },
       {
@@ -41,13 +46,6 @@ export default function Home({ allPokemon }) {
         threshold: 1.0,
       }
     );
-
-    function loadMorePokemon() {
-      setPokemonList((prevList) => [
-        ...prevList,
-        ...filteredPokemon.slice(prevList.length, prevList.length + 5),
-      ]);
-    }
 
     const currentRef = ref.current;
     if (currentRef) observer.observe(currentRef);
@@ -66,8 +64,8 @@ export default function Home({ allPokemon }) {
       <main className="flex flex-col items-center gap-10 p-5">
         <h1 className=" text-5xl">Pokedex</h1>
         <input
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
           className="p-3 text-xl"
           placeholder="Search Pokemon"
         />
