@@ -65,8 +65,12 @@ export default function Home({ allPokemon }) {
 
       <main className="flex flex-col items-center gap-10 p-5">
         <h1 className=" text-5xl">Pokedex</h1>
-        <input value={filter} onChange={(e) => setFilter(e.target.value)} />
-        <p>{filter}</p>
+        <input
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          className="p-3 text-xl"
+          placeholder="Search Pokemon"
+        />
         <div className="flex flex-wrap justify-center gap-10">
           {pokemonList.map((pokemon, index) => {
             return <Pokemon key={pokemon.name} {...pokemon} />;
