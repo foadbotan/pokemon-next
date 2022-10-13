@@ -58,16 +58,16 @@ export default function Home({ allPokemon }) {
   return (
     <div>
       <Head>
-        <title>Pokedex</title>
+        <title>Pokemon</title>
       </Head>
 
       <main className="flex flex-col items-center gap-10 p-5">
-        <h1 className=" text-5xl">Pokedex</h1>
+        <h1 className=" text-5xl">Pokemon</h1>
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="p-3 text-xl"
-          placeholder="Search Pokemon"
+          placeholder="Search "
         />
         <div className="flex flex-wrap justify-center gap-10">
           {pokemonList.map((pokemon, index) => {
