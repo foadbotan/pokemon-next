@@ -19,11 +19,10 @@ export default function Home({ allPokemon }) {
   const [search, setSearch] = useState("");
   const [filteredPokemon, setFilteredPokemon] = useState([]);
   const [pokemonList, setPokemonList] = useState([]);
-  const loadMoreRef = useRef();
+  const infiniteScrollRef = useRef();
 
   useEffect(() => {
-    const includesSearchString = (pokemon) => new RegExp(search, "i").test(pokemon.name);
-    setFilteredPokemon(allPokemon.filter(includesSearchString));
+    setFilteredPokemon(allPokemon.filter((pokemon) => pokemon.name.includes(search)));
     setPokemonList([]);
   }, [search, allPokemon]);
 
@@ -37,14 +36,9 @@ export default function Home({ allPokemon }) {
       }
     });
 
-    const currentRef = loadMoreRef.current;
-    if (currentRef) observer.observe(currentRef);
+    if (infiniteScrollRef.current) observer.observe(infiniteScrollRef.current);
 
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
+    return () => observer.disconnect();
   }, [filteredPokemon]);
 
   return (
@@ -62,12 +56,12 @@ export default function Home({ allPokemon }) {
           placeholder="Search "
         />
         <div className="flex flex-wrap justify-center gap-10">
-          {pokemonList.map((pokemon, index) => (
+          {pokemonList.map((pokemon) => (
             <Pokemon key={pokemon.name} {...pokemon} />
           ))}
         </div>
 
-        <div ref={loadMoreRef}></div>
+        <div ref={infiniteScrollRef}></div>
       </main>
     </div>
   );
