@@ -1,11 +1,8 @@
-import { useRouter } from "next/router";
 import Link from "next/link";
 
 const URL = "https://pokeapi.co/api/v2/pokemon/";
 
 export default function Pokemon({ pokemonData }) {
-  console.log(pokemonData.name);
-
   return (
     <div>
       <Link href="/">⬅ Back to Pokemon</Link>
@@ -18,9 +15,7 @@ export async function getStaticPaths() {
   const res = await fetch(URL);
   const { results } = await res.json();
 
-  const paths = results.map(({ name }) => ({
-    params: { pokemon: name },
-  }));
+  const paths = results.map(({ name }) => ({ params: { pokemon: name } }));
 
   return { paths, fallback: true };
 }

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 
 import Head from "next/head";
-import Pokemon from "../components/Pokemon";
+import PokemonCard from "../components/PokemonCard";
 
 const URL = `https://pokeapi.co/api/v2/pokemon?limit=-1`;
 
@@ -49,7 +49,6 @@ export default function Home({ allPokemon }) {
       </Head>
 
       <main className="flex flex-col items-center gap-10 p-5">
-        {/* <h1 className=" text-5xl">Pokemon</h1> */}
         <Image src="/pokemon-logo.svg" width="300" height="100" alt="logo" />
 
         <input
@@ -60,7 +59,7 @@ export default function Home({ allPokemon }) {
         />
         <div className="flex flex-wrap justify-center gap-10">
           {pokemonList.map((pokemon) => (
-            <Pokemon key={pokemon.name} {...pokemon} />
+            <PokemonCard key={pokemon.name} {...pokemon} />
           ))}
         </div>
 
