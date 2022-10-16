@@ -4,7 +4,18 @@ import PokemonCard from "../components/PokemonCard";
 
 const POKEMON_URL = "https://pokeapi.co/api/v2/pokemon/";
 
-export default function Pokemon({ pokemonData, evolutions, varietiesData, speciesData }) {
+export default function Pokemon({ pokemonData, evolutions, varietiesData, speciesData, error }) {
+  if (error)
+    return (
+      <div>
+        <Link href="/">
+          <p className="m-5 cursor-pointer text-xl underline">← Return to Pokemon search</p>
+        </Link>
+        <p className="m-5 text-2xl text-red-600">{error}</p>
+      </div>
+    );
+  if (!pokemonData) return <h1 className="m-20 text-center text-5xl">Loadding...</h1>;
+
   const name = pokemonData.name;
   const abilities = pokemonData.abilities.map(({ ability }) => ability.name);
   const types = pokemonData.types.map(({ type }) => type.name);
@@ -57,7 +68,7 @@ export default function Pokemon({ pokemonData, evolutions, varietiesData, specie
         </div>
 
         <div className="m-5">
-          <h2 className="text-4xl">Evolutions</h2>
+          <h2 className="m-10 text-center text-4xl">Evolutions</h2>
           <ul className="flex flex-wrap justify-center gap-10">
             {evolutions.map((evolution) => (
               <li key={evolution.name}>
@@ -73,7 +84,7 @@ export default function Pokemon({ pokemonData, evolutions, varietiesData, specie
 
         {varieties.length > 0 && (
           <div className="m-5">
-            <h2 className="text-4xl">Varieties</h2>
+            <h2 className="m-10 text-center text-4xl">Varieties</h2>
             <ul className="flex flex-wrap justify-center gap-10">
               {varieties.map((pokemon) => {
                 return (
@@ -88,10 +99,12 @@ export default function Pokemon({ pokemonData, evolutions, varietiesData, specie
 
         {moves.length > 0 && (
           <div className="m-5 capitalize">
-            <h2 className="text-4xl">Moves</h2>
-            <ul>
+            <h2 className="m-10 text-center text-4xl">Moves</h2>
+            <ul className="flex flex-wrap">
               {moves.map((move) => (
-                <li key={move}>{move}</li>
+                <li key={move}>
+                  <p className="m-2 bg-white py-1 px-3 ">{move}</p>
+                </li>
               ))}
             </ul>
           </div>
@@ -109,28 +122,43 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { pokemon } }) {
-  const pokemonData = await fetch(POKEMON_URL + pokemon).then((res) => res.json());
-  const speciesData = await fetch(pokemonData.species.url).then((res) => res.json());
-  const varietiesData = speciesData.varieties.map(({ pokemon }) => pokemon);
-  const evolutionChainData = await fetch(speciesData.evolution_chain.url).then((res) => res.json());
-  const evolutions = getEvolutions(evolutionChainData.chain);
+  try {
+    const pokemonData = await fetch(POKEMON_URL + pokemon).then((res) => res.json());
+    const speciesData = await fetch(pokemonData.species.url).then((res) => res.json());
+    const varietiesData = speciesData.varieties.map(({ pokemon }) => pokemon);
+    const evolutionChainData = await fetch(speciesData.evolution_chain.url).then((res) =>
+      res.json()
+    );
+    const evolutions = getEvolutions(evolutionChainData.chain);
 
-  function getEvolutions(chain) {
-    const evolutions = [];
-    let current = chain;
-    while (current) {
-      evolutions.push(current.species);
-      current = current.evolves_to[0];
+    function getEvolutions(chain) {
+      const evolutions = [];
+      let current = chain;
+      while (current) {
+        evolutions.push(current.species);
+        current = current.evolves_to[0];
+      }
+      return evolutions;
     }
-    return evolutions;
-  }
 
+    return {
+      props: {
+        pokemonData,
+        varietiesData,
+        evolutions,
+        speciesData,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+  }
   return {
     props: {
-      pokemonData,
-      varietiesData,
-      evolutions,
-      speciesData,
+      pokemonData: null,
+      varietiesData: null,
+      evolutions: null,
+      speciesData: null,
+      error: `Error: Pokemon "${pokemon}" not found`,
     },
   };
 }
