@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 import Head from "next/head";
 import Pokemon from "../components/Pokemon";
@@ -48,7 +49,9 @@ export default function Home({ allPokemon }) {
       </Head>
 
       <main className="flex flex-col items-center gap-10 p-5">
-        <h1 className=" text-5xl">Pokemon</h1>
+        {/* <h1 className=" text-5xl">Pokemon</h1> */}
+        <Image src="/pokemon-logo.svg" width="300" height="100" alt="logo" />
+
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
