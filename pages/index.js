@@ -55,7 +55,7 @@ export default function Home({ allPokemon }) {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="p-3 text-xl"
-          placeholder="Search "
+          placeholder="Search Pokemon"
         />
         <div className="flex flex-wrap justify-center gap-10">
           {pokemonList.map((pokemon) => (

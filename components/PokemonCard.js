@@ -37,31 +37,40 @@ export default function Pokemon({ url, name }) {
   if (loading || !image || !abilities || !types || !color) return null;
 
   return (
-    <Link href={`/${name}`}>
-      <div className="relative flex w-52 cursor-pointer flex-col justify-between overflow-hidden rounded-lg shadow-lg">
-        <div
-          className="absolute -z-20 h-full w-full opacity-30 saturate-50"
-          style={{ backgroundColor: color }}
-        ></div>
-        <h2 className="-mb-5 px-2 pt-5 text-center text-3xl font-bold capitalize">{name}</h2>
-        <div className="relative flex aspect-square items-center justify-center">
-          <div className="absolute h-3/5 w-full bg-white"></div>
-          <Image src={image} alt={name} height="200px" width="200px" />
-        </div>
-        <div className="-mt-5 p-3">
-          <p className="text-xs tracking-widest opacity-50">Abilities:</p>
-          <p className="capitalize">{abilities.join(", ")}</p>
-        </div>
-        <div className="-mt-5 p-3">
-          <p className="text-xs tracking-widest opacity-50">Type:</p>
-          <p className="capitalize">
-            {types.join(", ")}
-            <span className=" float-right rounded border bg-white py-0.5 px-2 opacity-50">
-              {id}
-            </span>
-          </p>
-        </div>
+    <div className="relative flex w-52 cursor-pointer flex-col justify-between overflow-hidden rounded-lg shadow-lg">
+      <div
+        className="absolute -z-20 h-full w-full opacity-20 saturate-50"
+        style={{ backgroundColor: color }}
+      ></div>
+      <h2
+        className="-mb-5 px-2 pt-5 text-center text-3xl font-bold capitalize brightness-50 saturate-50"
+        style={{ color }}
+      >
+        {name}
+      </h2>
+      <div className="relative flex aspect-square items-center justify-center">
+        <div className="absolute h-3/5 w-full bg-white"></div>
+        <Link href={`/${name}`}>
+          <Image
+            src={image}
+            alt={name}
+            height="200px"
+            width="200px"
+            className="cursor-pointer hover:scale-110"
+          />
+        </Link>
       </div>
-    </Link>
+      <div className="-mt-5 p-3">
+        <p className="text-xs tracking-widest opacity-50">Abilities:</p>
+        <p className="capitalize">{abilities.join(", ")}</p>
+      </div>
+      <div className="-mt-5 p-3">
+        <p className="text-xs tracking-widest opacity-50">Type:</p>
+        <p className="capitalize">
+          {types.join(", ")}
+          <span className=" float-right rounded border bg-white py-0.5 px-2 opacity-50">{id}</span>
+        </p>
+      </div>
+    </div>
   );
 }
