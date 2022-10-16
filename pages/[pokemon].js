@@ -32,7 +32,9 @@ export default function Pokemon({ pokemonData, evolutions, varietiesData, specie
 
   return (
     <div className="">
-      <Link href="/">⬅ Back to Pokemon</Link>
+      <Link href="/">
+        <p className="m-5 cursor-pointer text-xl underline">← Pokemon search</p>
+      </Link>
       <h1 className="m-5 text-center text-6xl capitalize">{name}</h1>
       <div>
         <div className="flex items-center">

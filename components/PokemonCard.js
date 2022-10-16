@@ -51,24 +51,26 @@ export default function Pokemon({ url, name }) {
       <div className="relative flex aspect-square items-center justify-center">
         <div className="absolute h-3/5 w-full bg-white"></div>
         <Link href={`/${name}`}>
-          <Image
-            src={image}
-            alt={name}
-            height="200px"
-            width="200px"
-            className="cursor-pointer hover:scale-110"
-          />
+          <div>
+            <Image
+              src={image}
+              alt={name}
+              height="200px"
+              width="200px"
+              className="cursor-pointer hover:scale-110"
+            />
+          </div>
         </Link>
       </div>
       <div className="-mt-5 p-3">
-        <p className="text-xs tracking-widest opacity-50">Abilities:</p>
+        <h4 className="text-xs tracking-widest opacity-50">Abilities:</h4>
         <p className="capitalize">{abilities.join(", ")}</p>
       </div>
       <div className="-mt-5 p-3">
-        <p className="text-xs tracking-widest opacity-50">Type:</p>
+        <h4 className="text-xs tracking-widest opacity-50">Type:</h4>
         <p className="capitalize">
           {types.join(", ")}
-          <span className=" float-right rounded border bg-white py-0.5 px-2 opacity-50">{id}</span>
+          <span className="float-right rounded bg-white py-0.5 px-2 opacity-50">{id}</span>
         </p>
       </div>
     </div>

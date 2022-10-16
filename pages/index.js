@@ -4,11 +4,10 @@ import Image from "next/image";
 import Head from "next/head";
 import PokemonCard from "../components/PokemonCard";
 
-const URL = `https://pokeapi.co/api/v2/pokemon?limit=-1`;
-
 export async function getStaticProps() {
-  const res = await fetch(URL);
-  const data = await res.json();
+  const ALL_POKEMON_URL = `https://pokeapi.co/api/v2/pokemon?limit=-1`;
+  const data = await fetch(ALL_POKEMON_URL).then((res) => res.json());
+
   return {
     props: {
       allPokemon: data.results,
