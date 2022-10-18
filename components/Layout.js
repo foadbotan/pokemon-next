@@ -10,7 +10,7 @@ export default function Layout({ children, title, className = "" }) {
       </Head>
 
       <main className={`container mx-auto ${className}`}>
-        <div className="flex items-center justify-center">
+        <div className="mb-10 flex items-center justify-center">
           <Link href="/">
             <div>
               <Image
