@@ -1,78 +1,34 @@
-import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { COLORS } from "../constants/color";
 
-export default function Pokemon({ url, name }) {
-  const [loading, setLoading] = useState(true);
-  const [image, setImage] = useState("");
-  const [abilities, setAbilities] = useState("");
-  const [types, setTypes] = useState("");
-  const [species, setSpecies] = useState("");
-  const [color, setColor] = useState("");
-  const [id, setId] = useState("");
-
-  useEffect(() => {
-    fetch(url)
-      .then((res) => res.json())
-      .then((data) => {
-        setLoading(false);
-        setImage(data.sprites.other["official-artwork"].front_default);
-        setAbilities(data.abilities.map(({ ability }) => ability.name));
-        setTypes(data.types.map(({ type }) => type.name));
-        setSpecies(data.species.url);
-        setId(data.id);
-      })
-      .catch((err) => {
-        console.error("Error fetching data:", err);
-      });
-  }, [url]);
-
-  useEffect(() => {
-    if (species === "") return;
-    fetch(species)
-      .then((res) => res.json())
-      .then((data) => setColor(data.color.name));
-  }, [species]);
-
-  if (loading || !image || !abilities || !types || !color) return null;
-
+export default function Pokemon({ name, id, url, types, image }) {
   return (
-    <div className="relative flex w-52 cursor-pointer flex-col justify-between overflow-hidden rounded-lg shadow-lg">
-      <div
-        className="absolute -z-20 h-full w-full opacity-20 saturate-50"
-        style={{ backgroundColor: color }}
-      ></div>
-      <h2
-        className="-mb-5 px-2 pt-5 text-center text-3xl font-bold capitalize brightness-50 saturate-50"
-        style={{ color }}
-      >
-        {name}
-      </h2>
-      <div className="relative flex aspect-square items-center justify-center">
-        <div className="absolute h-3/5 w-full bg-white"></div>
-        <Link href={`/${name}`}>
-          <div>
-            <Image
-              src={image}
-              alt={name}
-              height="200px"
-              width="200px"
-              className="cursor-pointer hover:scale-110"
-            />
-          </div>
-        </Link>
+    <Link href={`/${name}`}>
+      <div className="cursor-pointer overflow-hidden rounded-md shadow-md transition duration-300 hover:rotate-1 hover:scale-105 hover:shadow-lg hover:brightness-105">
+        <div className="bg-gray-300 p-3">
+          <p className="text-xs">#{`${id}`.padStart(3, "0")}</p>
+          <h3 className="break-words text-2xl font-black capitalize opacity-80">{name}</h3>
+        </div>
+
+        <div className="flex flex-col items-center gap-2 p-3">
+          <Image src={image} width="200" height="200" alt={name} />
+          {types && (
+            <div className="flex gap-2 self-start ">
+              {types.map((type) => (
+                <span
+                  key={type}
+                  className={`rounded-full px-2 py-1 text-xs font-semibold uppercase`}
+                  style={{ backgroundColor: COLORS[type] }}
+                >
+                  {type}
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
-      <div className="-mt-5 p-3">
-        <h4 className="text-xs tracking-widest opacity-50">Abilities:</h4>
-        <p className="capitalize">{abilities.join(", ")}</p>
-      </div>
-      <div className="-mt-5 p-3">
-        <h4 className="text-xs tracking-widest opacity-50">Type:</h4>
-        <p className="capitalize">
-          {types.join(", ")}
-          <span className="float-right rounded bg-white py-0.5 px-2 opacity-50">{id}</span>
-        </p>
-      </div>
-    </div>
+    </Link>
   );
 }
