@@ -18,7 +18,9 @@ export default function Home({ allPokemon, types, error }) {
         .filter((p) => p.name.includes(search))
         .filter((p) => selectedTypes.every((t) => p.types.includes(t)));
     });
-  }, [search, allPokemon, selectedTypes, types]);
+    // scroll to top when search or type changes
+    // window.scrollTo(0, 0);
+  }, [search, allPokemon, selectedTypes]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
@@ -82,11 +84,11 @@ export default function Home({ allPokemon, types, error }) {
           </p>
         </div>
 
-        <div className=" ml-80 flex flex-wrap justify-center gap-10">
+        <div className="ml-80 flex flex-wrap justify-center gap-10">
           {pokemon.slice(0, numberOfPokemon).map((pokemon, index) => (
             <PokemonCard key={pokemon.name} {...pokemon} />
           ))}
-          <div ref={infiniteScrollRef}></div>
+          <div className="w-full" ref={infiniteScrollRef}></div>
         </div>
       </div>
     </Layout>
