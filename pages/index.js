@@ -12,6 +12,12 @@ export default function Home({ allPokemon, types, error }) {
   const [numberOfPokemon, setNumberOfPokemon] = useState(10);
   const infiniteScrollRef = useRef(null);
 
+  function reset() {
+    setSearch("");
+    setSelectedTypes([]);
+    setNumberOfPokemon(10);
+  }
+
   useEffect(() => {
     setPokemon(() => {
       return allPokemon
@@ -74,7 +80,7 @@ export default function Home({ allPokemon, types, error }) {
             ))}
           </div>
           <button
-            onClick={() => setSelectedTypes([])}
+            onClick={reset}
             className="rounded bg-red-400 px-2 py-1 text-xs font-semibold uppercase hover:bg-red-500"
           >
             X Clear
