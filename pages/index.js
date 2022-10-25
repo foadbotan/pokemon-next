@@ -19,7 +19,7 @@ export default function Home({ allPokemon, types, error }) {
         .filter((p) => selectedTypes.every((t) => p.types.includes(t)));
     });
     // scroll to top when search or type changes
-    // window.scrollTo(0, 0);
+    window.scrollTo(0, 0);
   }, [search, allPokemon, selectedTypes]);
 
   useEffect(() => {
