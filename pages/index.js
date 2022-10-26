@@ -21,7 +21,7 @@ export default function Home({ allPokemon, types, error }) {
   useEffect(() => {
     setPokemon(() => {
       return allPokemon
-        .filter((p) => p.name.includes(search))
+        .filter((p) => p.name.includes(search) || p.id.startsWith(search))
         .filter((p) => selectedTypes.every((t) => p.types.includes(t)));
     });
     // scroll to top when search or type changes
@@ -32,7 +32,6 @@ export default function Home({ allPokemon, types, error }) {
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         setNumberOfPokemon((prev) => prev + 20);
-        console.log("intersecting");
       }
     });
 
