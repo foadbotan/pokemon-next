@@ -16,7 +16,11 @@ export default function Pokemon(props) {
       </div>
       <div className="flex flex-wrap gap-4">
         {types.map((type) => (
-          <p key={type} className="rounded-full px-4 py-2 text-sm font-bold capitalize">
+          <p
+            key={type}
+            className="rounded-full px-4 py-2 text-sm font-bold capitalize"
+            style={{ backgroundColor: COLORS[type] }}
+          >
             {type}
           </p>
         ))}
