@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import { COLORS } from "../constants/colors";
 
-export default function Pokemon({ name, id, url, types, image }) {
+function Pokemon({ name, id, url, types, image }) {
+  console.log(id);
   return (
     <Link href={`/${name}`}>
       <div className="w-60 cursor-pointer overflow-hidden rounded-md shadow-md transition duration-300 hover:rotate-1 hover:scale-105 hover:shadow-lg hover:brightness-105">
@@ -32,3 +33,5 @@ export default function Pokemon({ name, id, url, types, image }) {
     </Link>
   );
 }
+
+export default memo(Pokemon);
