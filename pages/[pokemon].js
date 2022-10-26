@@ -13,8 +13,8 @@ export default function Pokemon(props) {
     <Layout
       title={name}
       style={{
-        backgroundColor: color,
-        backgroundImage: `linear-gradient(hsl(0 0% 20% / 0.5), hsl(0 0% 80% / 0.5))`,
+        backgroundColor: COLORS[color],
+        backgroundImage: `linear-gradient(45deg, transparent 0%, hsl(0 0% 100% / 0.3) 30%, hsl(0 0% 100% / 0.3) 70%, transparent 100%)`,
       }}
       className="h-screen"
     >
