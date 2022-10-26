@@ -17,13 +17,13 @@ export default function Pokemon({ name, id, url, types, image }) {
           {types && (
             <div className="flex gap-2 self-start ">
               {types.map((type) => (
-                <span
+                <div
                   key={type}
                   className={`rounded-full px-2 py-1 text-xs font-semibold uppercase`}
                   style={{ backgroundColor: COLORS[type] }}
                 >
-                  {type}
-                </span>
+                  <div className="opacity-75">{type}</div>
+                </div>
               ))}
             </div>
           )}
