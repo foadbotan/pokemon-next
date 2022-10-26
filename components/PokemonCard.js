@@ -4,7 +4,6 @@ import { useEffect, useState, memo } from "react";
 import { COLORS } from "../constants/colors";
 
 function Pokemon({ name, id, url, types, image }) {
-  console.log(id);
   return (
     <Link href={`/${name}`}>
       <div className="w-60 cursor-pointer overflow-hidden rounded-md shadow-md transition duration-300 hover:rotate-1 hover:scale-105 hover:shadow-lg hover:brightness-105">
