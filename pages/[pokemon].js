@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Layout from "../components/Layout";
+import { COLORS } from "../constants/colors";
 
 const URL = "https://pokeapi.co/api/v2/pokemon/";
 

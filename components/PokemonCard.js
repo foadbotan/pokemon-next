@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { COLORS } from "../constants/color";
+import { COLORS } from "../constants/colors";
 
 export default function Pokemon({ name, id, url, types, image }) {
   return (
