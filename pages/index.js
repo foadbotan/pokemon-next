@@ -130,7 +130,9 @@ export async function getStaticProps() {
     return {
       props: {
         allPokemon: Object.values(allPokemon).sort((a, b) => a.id - b.id),
-        types: typesData.results.map((type) => type.name),
+        types: typesData.results
+          .map((type) => type.name)
+          .filter((type) => type !== "unknown" && type !== "shadow"),
       },
     };
   } catch (error) {
