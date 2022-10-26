@@ -7,9 +7,18 @@ const URL = "https://pokeapi.co/api/v2/pokemon/";
 export default function Pokemon(props) {
   const { color, name, abilities, types, image, moves, id, stats, japaneseName } = props;
 
+  console.log(props);
+
   return (
-    <Layout title={name}>
-      <p className="absolute text-[12rem] font-black opacity-10">{japaneseName}</p>
+    <Layout
+      title={name}
+      style={{
+        backgroundColor: color,
+        backgroundImage: `linear-gradient(hsl(0 0% 20% / 0.5), hsl(0 0% 80% / 0.5))`,
+      }}
+      className="h-screen"
+    >
+      <p className="absolute text-[12rem] font-black  opacity-10 ">{japaneseName}</p>
       <div className="flex">
         <h2 className="text-6xl font-bold capitalize">{name}</h2>
         <Image src={image} alt={name} height="300" width="300" />
