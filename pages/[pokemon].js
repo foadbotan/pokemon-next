@@ -7,8 +7,6 @@ const URL = "https://pokeapi.co/api/v2/pokemon/";
 export default function Pokemon(props) {
   const { color, name, abilities, types, image, moves, id, stats, japaneseName } = props;
 
-  console.log(props);
-
   return (
     <Layout
       title={name}
@@ -25,13 +23,13 @@ export default function Pokemon(props) {
       </div>
       <div className="flex flex-wrap gap-4">
         {types.map((type) => (
-          <p
+          <div
             key={type}
             className="rounded-full px-4 py-2 text-sm font-bold capitalize"
             style={{ backgroundColor: COLORS[type] }}
           >
-            {type}
-          </p>
+            <div className="opacity-60">{type}</div>
+          </div>
         ))}
       </div>
     </Layout>
