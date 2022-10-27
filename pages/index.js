@@ -53,7 +53,7 @@ export default function Home({ allPokemon, types, error }) {
             className="p-3 text-xl"
             placeholder="Search Pokemon"
           />
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap justify-center gap-2">
             {types.map((type) => (
               <button
                 key={type}
@@ -66,7 +66,7 @@ export default function Home({ allPokemon, types, error }) {
                 }}
                 className={`${
                   selectedTypes.includes(type) ? "bg-green-400" : "bg-gray-200 hover:bg-gray-300"
-                } mr-2 rounded px-2 py-1 text-xs font-semibold uppercase`}
+                } w-1/4 rounded py-1 text-xs font-semibold uppercase`}
               >
                 {type}
               </button>
@@ -74,9 +74,9 @@ export default function Home({ allPokemon, types, error }) {
           </div>
           <button
             onClick={reset}
-            className="rounded bg-red-400 px-2 py-1 text-xs font-semibold uppercase hover:bg-red-500"
+            className="w-full rounded bg-red-400 py-2 text-sm font-semibold uppercase text-white hover:bg-red-500"
           >
-            X Clear
+            Clear
           </button>
           <p className="m-5 text-center text-sm">
             Showing {pokemon.length} of {allPokemon.length} Pokemon
