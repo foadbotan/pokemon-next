@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import PokemonCard from "../components/PokemonCard";
 import Layout from "../components/Layout";
+import useInfiniteScroll from "../hooks/useInfiniteScroll";
 
 const TYPE_URL = `https://pokeapi.co/api/v2/type`;
 const IMAGES_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/`;
@@ -10,15 +11,20 @@ export default function Home({ allPokemon, types, error }) {
   const [pokemon, setPokemon] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [numberOfPokemon, setNumberOfPokemon] = useState(10);
-  const infiniteScrollRef = useRef(null);
+  const infiniteScrollRef = useInfiniteScroll(displayMorePokemon);
+
+  function displayMorePokemon() {
+    setNumberOfPokemon((prev) => prev + 5);
+  }
 
   function reset() {
     setSearch("");
     setSelectedTypes([]);
-    setNumberOfPokemon(10);
+    setNumberOfPokemon(0);
   }
 
   useEffect(() => {
+    setNumberOfPokemon(10);
     setPokemon(() => {
       return allPokemon
         .filter((p) => p.name.includes(search) || p.id.startsWith(search))
@@ -27,18 +33,6 @@ export default function Home({ allPokemon, types, error }) {
     // scroll to top when search or type changes
     window.scrollTo(0, 0);
   }, [search, allPokemon, selectedTypes]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setNumberOfPokemon((prev) => prev + 20);
-      }
-    });
-
-    if (infiniteScrollRef.current) observer.observe(infiniteScrollRef.current);
-
-    return () => observer.disconnect();
-  }, [pokemon]);
 
   if (error) {
     return (
@@ -59,7 +53,7 @@ export default function Home({ allPokemon, types, error }) {
             className="p-3 text-xl"
             placeholder="Search Pokemon"
           />
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap justify-center gap-2">
             {types.map((type) => (
               <button
                 key={type}
@@ -72,7 +66,7 @@ export default function Home({ allPokemon, types, error }) {
                 }}
                 className={`${
                   selectedTypes.includes(type) ? "bg-green-400" : "bg-gray-200 hover:bg-gray-300"
-                } mr-2 rounded px-2 py-1 text-xs font-semibold uppercase`}
+                } w-1/4 rounded py-1 text-xs font-semibold uppercase`}
               >
                 {type}
               </button>
@@ -80,9 +74,9 @@ export default function Home({ allPokemon, types, error }) {
           </div>
           <button
             onClick={reset}
-            className="rounded bg-red-400 px-2 py-1 text-xs font-semibold uppercase hover:bg-red-500"
+            className="w-full rounded bg-red-400 py-2 text-sm font-semibold uppercase text-white hover:bg-red-500"
           >
-            X Clear
+            Clear
           </button>
           <p className="m-5 text-center text-sm">
             Showing {pokemon.length} of {allPokemon.length} Pokemon
@@ -90,10 +84,10 @@ export default function Home({ allPokemon, types, error }) {
         </div>
 
         <div className="ml-80 flex flex-wrap justify-center gap-10">
-          {pokemon.slice(0, numberOfPokemon).map((pokemon, index) => (
+          {pokemon.slice(0, numberOfPokemon).map((pokemon) => (
             <PokemonCard key={pokemon.name} {...pokemon} />
           ))}
-          <div className="w-full" ref={infiniteScrollRef}></div>
+          <div ref={infiniteScrollRef}></div>
         </div>
       </div>
     </Layout>
