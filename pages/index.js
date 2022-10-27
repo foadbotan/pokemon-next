@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import PokemonCard from "../components/PokemonCard";
 import Layout from "../components/Layout";
+import useInfiniteScroll from "../hooks/useInfiniteScroll";
 
 const TYPE_URL = `https://pokeapi.co/api/v2/type`;
 const IMAGES_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/`;
@@ -9,16 +10,21 @@ export default function Home({ allPokemon, types, error }) {
   const [search, setSearch] = useState("");
   const [pokemon, setPokemon] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
-  const [numberOfPokemon, setNumberOfPokemon] = useState(10);
-  const infiniteScrollRef = useRef(null);
+  const [numberOfPokemon, setNumberOfPokemon] = useState(0);
+  const infiniteScrollRef = useInfiniteScroll(displayMorePokemon);
+
+  function displayMorePokemon() {
+    setNumberOfPokemon((prev) => prev + 5);
+  }
 
   function reset() {
     setSearch("");
     setSelectedTypes([]);
-    setNumberOfPokemon(10);
+    setNumberOfPokemon(0);
   }
 
   useEffect(() => {
+    setNumberOfPokemon(10);
     setPokemon(() => {
       return allPokemon
         .filter((p) => p.name.includes(search) || p.id.startsWith(search))
@@ -27,18 +33,6 @@ export default function Home({ allPokemon, types, error }) {
     // scroll to top when search or type changes
     window.scrollTo(0, 0);
   }, [search, allPokemon, selectedTypes]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setNumberOfPokemon((prev) => prev + 20);
-      }
-    });
-
-    if (infiniteScrollRef.current) observer.observe(infiniteScrollRef.current);
-
-    return () => observer.disconnect();
-  }, [pokemon]);
 
   if (error) {
     return (
@@ -90,10 +84,10 @@ export default function Home({ allPokemon, types, error }) {
         </div>
 
         <div className="ml-80 flex flex-wrap justify-center gap-10">
-          {pokemon.slice(0, numberOfPokemon).map((pokemon, index) => (
+          {pokemon.slice(0, numberOfPokemon).map((pokemon) => (
             <PokemonCard key={pokemon.name} {...pokemon} />
           ))}
-          <div className="w-full" ref={infiniteScrollRef}></div>
+          <div ref={infiniteScrollRef}></div>
         </div>
       </div>
     </Layout>
