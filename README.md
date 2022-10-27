@@ -1,6 +1,6 @@
 # Pokedex
 
-I built this pokedex app with React, Next.js and Tailwind. It uses an external [Pokemon API](https://pokeapi.co/). You can view the live site [here](https://pokedex-next-app.netlify.app/). The site is hosted on Netlify.
+I built this pokedex app with **React**, **Next.js** and **Tailwind**. I used an external API for the Pokemon data. You can view the live site [here](https://pokedex-next-app.netlify.app/). The site is hosted on Netlify.
 
 ### Build Setup
 
