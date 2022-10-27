@@ -31,7 +31,7 @@ export default function Pokemon(props) {
     >
       <p className="absolute text-[12rem] font-black  opacity-10 ">{japaneseName}</p>
       <div className="flex">
-        <h2 className="text-6xl font-bold capitalize">{name}</h2>
+        <h2 className="text-6xl font-bold capitalize opacity-70">{name}</h2>
         <Image src={image} alt={name} height="300" width="300" />
       </div>
       <div className="flex flex-wrap gap-4">
