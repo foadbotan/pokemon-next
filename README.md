@@ -1,12 +1,14 @@
 # Pokedex
 
-I built this app with React, Next.js and Tailwind. It uses an external API for the Pokemon data.
+I built this pokedex app with React, Next.js and Tailwind. It uses an external [Pokemon API](https://pokeapi.co/). You can view the live site [here](https://pokedex-next-app.netlify.app/). The site is hosted on Netlify.
+
+### Build Setup
 
 The home page contains a list of all Pokemon, and each Pokemon has its own details page.
 
-The home page is server-side generated (SSG), allowing me to prefetch data from the Pokemon API and serve a lightening fast static page.
+The home page is server-side generated (SSG), allowing me to prefetch data from the API and serve a lightening fast static page.
 
-Given the large number of Pokemon, a similar SSG approach was suboptimal. The individual Pokemon pages are still server-side rendered but only at the time of each page request (SSR).
+Given the large number of Pokemon, using a similar SSG approach for the individual Pokemon pages would be suboptimal. The Pokemon pages are still server-side rendered but only at the time of each page request (SSR).
 
 ### Features added:
 
@@ -14,7 +16,7 @@ Given the large number of Pokemon, a similar SSG approach was suboptimal. The in
 - ❌ Filter by type
 - ♾ Infinite scrolling to load more
 
-### Difficulties faced:
+### Challenges overcome:
 
 - Optimizing the number of API calls from 1,155 to 21
 - Creating a custom useInfiniteScroll hook
