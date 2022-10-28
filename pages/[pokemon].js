@@ -49,18 +49,6 @@ export default function Pokemon(props) {
   );
 }
 
-// export async function getStaticPaths() {
-//   const data = await fetch(URL + "?limit=-1").then((res) => res.json());
-//   const paths = data.results.map((pokemon) => ({
-//     params: { pokemon: pokemon.name },
-//   }));
-
-//   return {
-//     paths,
-//     fallback: false,
-//   };
-// }
-
 export async function getServerSideProps({ params: { pokemon } }) {
   try {
     const pokemonData = await fetch(URL + pokemon).then((res) => res.json());
