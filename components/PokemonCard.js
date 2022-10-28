@@ -6,7 +6,7 @@ import { COLORS } from "../constants/colors";
 function Pokemon({ name, id, url, types, image }) {
   return (
     <Link href={`/${name}`}>
-      <div className="w-60 cursor-pointer overflow-hidden rounded-md shadow-md transition duration-300 hover:rotate-1 hover:scale-105 hover:shadow-lg hover:brightness-105">
+      <div className="flex w-48 cursor-pointer flex-col justify-between overflow-hidden rounded-md shadow-md transition duration-300 hover:rotate-1 hover:scale-105 hover:shadow-lg hover:brightness-105 ">
         <div className="bg-gray-300 p-3">
           <p className="text-xs">#{`${id}`.padStart(3, "0")}</p>
           <h3 className="break-words text-2xl font-black capitalize opacity-80">{name}</h3>
