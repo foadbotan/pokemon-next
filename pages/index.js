@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import PokemonCard from "../components/PokemonCard";
 import Layout from "../components/Layout";
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
+import Error from "../components/Error";
 
 const TYPE_URL = `https://pokeapi.co/api/v2/type`;
 const IMAGES_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/`;
@@ -34,14 +35,7 @@ export default function Home({ allPokemon, types, error }) {
     window.scrollTo(0, 0);
   }, [search, allPokemon, selectedTypes]);
 
-  if (error) {
-    return (
-      <Layout>
-        <h1 className="mb-2 text-center text-4xl">Error</h1>
-        <p className="text-center">{error}</p>
-      </Layout>
-    );
-  }
+  if (error) return <Error error={error} />;
 
   return (
     <Layout>
