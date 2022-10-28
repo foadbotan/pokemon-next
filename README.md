@@ -14,7 +14,7 @@ Given the large number of Pokemon, using a similar SSG approach for the individu
 
 - 🔍Search by name or id
 - ❌ Filter by type
-- ♾ Infinite scrolling to load more
+- ♾ Infinite scrolling † 
 
 ### Challenges overcome:
 
@@ -22,3 +22,7 @@ Given the large number of Pokemon, using a similar SSG approach for the individu
 - Creating a custom useInfiniteScroll hook
 
 <img src="screenshot.png" />
+
+† I understand that infinite scroll is a nightmare for performance without windowing. Given the nature of this project, I didn't feel it was necessary. 
+
+In a larger project, with actual users,  I would implement windowing functionality or use something like [react-window](https://react-window.vercel.app/#/examples/list/fixed-size).
