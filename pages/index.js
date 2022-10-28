@@ -28,8 +28,8 @@ export default function Home({ allPokemon, types, error }) {
     setNumberOfPokemon(10);
     setPokemon(() => {
       return allPokemon
-        .filter((p) => p.name.includes(search) || p.id.startsWith(search))
-        .filter((p) => selectedTypes.every((t) => p.types.includes(t)));
+        .filter(({name, id}) => name.includes(search.toLowerCase()) || id.startsWith(search))
+        .filter(({types}) => selectedTypes.every((type) => types.includes(type)));
     });
     // scroll to top when search or type changes
     window.scrollTo(0, 0);
