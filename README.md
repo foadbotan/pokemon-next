@@ -1,6 +1,6 @@
 # Pokedex
 
-I built this pokedex app with **React**, **Next.js** and **Tailwind**. I used an external API for the Pokemon data. You can view the live site [here](https://pokedex-next-app.netlify.app/). The site is hosted on Netlify.
+I built this app with **React**, **Next.js** and **Tailwind**. I used an external API for the Pokemon data. You can view the live site [here](https://pokedex-next-app.netlify.app/). The site is hosted on Netlify.
 
 ### Build Setup
 
@@ -23,6 +23,6 @@ Given the large number of Pokemon, using a similar SSG approach for the individu
 
 <img src="screenshot.png" />
 
-† I understand that infinite scroll is a nightmare for performance without windowing. Given the nature of this project, I didn't feel it was necessary. 
+† I understand that infinite scrolling is a nightmare for performance without windowing. Given the nature of this project, I didn't feel it was necessary. 
 
 In a larger project, with actual users,  I would implement windowing functionality or use something like [react-window](https://react-window.vercel.app/#/examples/list/fixed-size).
