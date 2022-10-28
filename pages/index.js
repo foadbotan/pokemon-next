@@ -83,7 +83,7 @@ export default function Home({ allPokemon, types, error }) {
           </p>
         </div>
 
-        <div className="ml-80 flex flex-wrap justify-center gap-10">
+        <div className="ml-80 flex flex-wrap gap-10">
           {pokemon.slice(0, numberOfPokemon).map((pokemon) => (
             <PokemonCard key={pokemon.name} {...pokemon} />
           ))}
