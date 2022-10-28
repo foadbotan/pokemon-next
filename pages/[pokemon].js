@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Layout from "../components/Layout";
 import { COLORS } from "../constants/colors";
+import Error404 from "../components/Error404";
 
 const URL = "https://pokeapi.co/api/v2/pokemon/";
 
@@ -10,15 +11,8 @@ export default function Pokemon(props) {
 
   const router = useRouter();
   const query = router.query;
-  if (error) {
-    return (
-      <Layout>
-        <h1 className="mb-2 text-center text-4xl">Error 404</h1>
-        <p className="text-center">Pokemon: {query.pokemon}</p>
-        <p className="text-center text-red-500">{error}</p>
-      </Layout>
-    );
-  }
+
+  if (error) return <Error404 error={error} query={query} />;
 
   return (
     <Layout
