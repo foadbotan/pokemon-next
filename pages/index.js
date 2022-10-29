@@ -15,6 +15,7 @@ export default function Home({ allPokemon, types, error }) {
   const infiniteScrollRef = useInfiniteScroll(displayMorePokemon);
 
   function displayMorePokemon() {
+    if (numberOfPokemon > pokemon.length) return;
     setNumberOfPokemon((prev) => prev + 5);
   }
 
@@ -28,8 +29,8 @@ export default function Home({ allPokemon, types, error }) {
     setNumberOfPokemon(10);
     setPokemon(() => {
       return allPokemon
-        .filter(({name, id}) => name.includes(search.toLowerCase()) || id.startsWith(search))
-        .filter(({types}) => selectedTypes.every((type) => types.includes(type)));
+        .filter(({ name, id }) => name.includes(search.toLowerCase()) || id.startsWith(search))
+        .filter(({ types }) => selectedTypes.every((type) => types.includes(type)));
     });
     // scroll to top when search or type changes
     window.scrollTo(0, 0);
