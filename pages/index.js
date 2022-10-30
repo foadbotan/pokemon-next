@@ -3,7 +3,7 @@ import PokemonCard from "../components/PokemonCard";
 import Layout from "../components/Layout";
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
 import Error from "../components/Error";
-import Select from "react-Select";
+import Select from "react-select";
 import { capitalize } from "../utils";
 
 const TYPE_URL = `https://pokeapi.co/api/v2/type`;
