@@ -3,6 +3,8 @@ import PokemonCard from "../components/PokemonCard";
 import Layout from "../components/Layout";
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
 import Error from "../components/Error";
+import Select from "react-Select";
+import { capitalize } from "../utils";
 
 const TYPE_URL = `https://pokeapi.co/api/v2/type`;
 const IMAGES_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/`;
@@ -30,7 +32,7 @@ export default function Home({ allPokemon, types, error }) {
     setPokemon(() => {
       return allPokemon
         .filter(({ name, id }) => name.includes(search.toLowerCase()) || id.startsWith(search))
-        .filter(({ types }) => selectedTypes.every((type) => types.includes(type)));
+        .filter(({ types }) => selectedTypes.every((type) => types.includes(type.value)));
     });
     // scroll to top when search or type changes
     window.scrollTo(0, 0);
@@ -40,45 +42,44 @@ export default function Home({ allPokemon, types, error }) {
 
   return (
     <Layout>
-      <div className="flex">
-        <div className="fixed flex w-80 flex-col items-start gap-10 p-5">
+      <div className="container mx-auto flex flex-col">
+        <div className="mb-5 flex flex-col items-center justify-center gap-5 sm:flex-row">
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="p-3 text-xl"
-            placeholder="Search Pokemon"
+            className="w-[250px] rounded-md border border-zinc-300 p-1.5"
+            placeholder="Search by name or id"
           />
-          <div className="flex flex-wrap justify-center gap-2">
-            {types.map((type) => (
-              <button
-                key={type}
-                onClick={() => {
-                  if (selectedTypes.includes(type)) {
-                    setSelectedTypes(selectedTypes.filter((t) => t !== type));
-                  } else {
-                    setSelectedTypes([...selectedTypes, type]);
-                  }
-                }}
-                className={`${
-                  selectedTypes.includes(type) ? "bg-green-400" : "bg-gray-200 hover:bg-gray-300"
-                } w-1/4 rounded py-1 text-xs font-semibold uppercase`}
-              >
-                {type}
-              </button>
-            ))}
-          </div>
-          <button
-            onClick={reset}
-            className="w-full rounded bg-red-400 py-2 text-sm font-semibold uppercase text-white hover:bg-red-500"
-          >
-            Clear
-          </button>
-          <p className="m-5 text-center text-sm">
+          <Select
+            options={types}
+            isMulti
+            value={selectedTypes}
+            onChange={(selected) => setSelectedTypes(selected)}
+            className="min-w-[250px]"
+            placeholder="Select type"
+            instanceId="type-select" // fixes warning about duplicate ids
+          />
+
+          <p className="text-center text-sm">
             Showing {pokemon.length} of {allPokemon.length} Pokemon
           </p>
         </div>
 
-        <div className="ml-80 flex flex-wrap gap-10">
+        <div>
+          {pokemon.length === 0 && (
+            <div className="flex flex-col items-center justify-center gap-5">
+              <h1 className="text-2xl font-bold">No Pokemon found</h1>
+              <button
+                onClick={reset}
+                className="rounded bg-red-400 py-1 px-5 text-white hover:bg-red-500"
+              >
+                Reset
+              </button>
+            </div>
+          )}
+        </div>
+
+        <div className="flex w-full flex-wrap justify-center gap-10">
           {pokemon.slice(0, numberOfPokemon).map((pokemon) => (
             <PokemonCard key={pokemon.name} {...pokemon} />
           ))}
@@ -91,6 +92,9 @@ export default function Home({ allPokemon, types, error }) {
 
 export async function getStaticProps() {
   try {
+    // HACK: Instead of fetching all the pokemon (1154) one by one to get the types,
+    // we can fetch the types (20) and get the pokemon from the types.
+    // I'm not sure if this is faster, but it makes me happy :)
     const typesData = await fetch(TYPE_URL).then((res) => res.json());
     const types = await Promise.all(
       typesData.results.map(async (type) => {
@@ -118,9 +122,7 @@ export async function getStaticProps() {
     return {
       props: {
         allPokemon: Object.values(allPokemon).sort((a, b) => a.id - b.id),
-        types: typesData.results
-          .map((type) => type.name)
-          .filter((type) => type !== "unknown" && type !== "shadow"),
+        types: typesData.results.map(({ name }) => ({ value: name, label: capitalize(name) })),
       },
     };
   } catch (error) {
