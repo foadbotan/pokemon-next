@@ -22,7 +22,7 @@ export default function Layout({ children, title, className = "", style = {} }) 
           </div>
         </Link>
       </header>
-      <main style={style} className={`pt-32 ${className}`}>
+      <main style={style} className={`pt-60 ${className}`}>
         {children}
       </main>
     </div>
