@@ -3,7 +3,7 @@ import Link from "next/link";
 import { memo } from "react";
 import { COLORS } from "../constants/colors";
 
-function Pokemon({ name, id, url, types, image }) {
+function Pokemon({ name, id, types, image }) {
   let backgroundColors = types.map((type) => COLORS[type]).join();
   if (types.length === 1) backgroundColors = `${backgroundColors}, ${backgroundColors}`;
 
