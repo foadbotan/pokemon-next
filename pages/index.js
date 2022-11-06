@@ -23,33 +23,22 @@ export default function Home(props) {
     setTypeFilter,
     setNumberOfPokemonVisible,
   } = props;
-
-  const [pokemon, setPokemon] = useState([]);
   const infiniteScrollRef = useInfiniteScroll(displayMorePokemon);
+  const filteredPokemon = allPokemon
+    .filter(({ name, id }) => name.includes(searchFilter) || id.startsWith(searchFilter))
+    .filter((pokemon) => typeFilter.every((type) => pokemon.types.includes(type.value)))
+    .slice(0, numberOfPokemonVisible);
 
   function displayMorePokemon() {
-    if (numberOfPokemonVisible > pokemon.length) return;
+    if (numberOfPokemonVisible > filteredPokemon.length) return;
     setNumberOfPokemonVisible((prev) => prev + 5);
   }
 
-  function reset() {
+  function resetFilters() {
     setSearchFilter("");
     setTypeFilter([]);
     setNumberOfPokemonVisible(0);
   }
-
-  useEffect(() => {
-    setNumberOfPokemonVisible(10);
-    setPokemon(() => {
-      return allPokemon
-        .filter(
-          ({ name, id }) => name.includes(searchFilter.toLowerCase()) || id.startsWith(searchFilter)
-        )
-        .filter(({ types }) => typeFilter.every((type) => types.includes(type.value)));
-    });
-    // scroll to top when search or type changes
-    window.scrollTo(0, 0);
-  }, [searchFilter, allPokemon, typeFilter]);
 
   if (error) return <Error error={error} />;
 
@@ -74,16 +63,16 @@ export default function Home(props) {
           />
 
           <p className="text-center text-sm">
-            Showing {pokemon.length} of {allPokemon.length} Pokemon
+            Showing {filteredPokemon.length} of {allPokemon.length} Pokemon
           </p>
         </div>
 
         <div>
-          {pokemon.length === 0 && (
+          {filteredPokemon.length === 0 && (
             <div className="flex flex-col items-center justify-center gap-5">
               <h1 className="text-2xl font-bold">No Pokemon found</h1>
               <button
-                onClick={reset}
+                onClick={resetFilters}
                 className="rounded bg-red-400 py-1 px-5 text-white hover:bg-red-500"
               >
                 Reset
@@ -93,7 +82,7 @@ export default function Home(props) {
         </div>
 
         <div className="flex w-full flex-wrap justify-center gap-5">
-          {pokemon.slice(0, numberOfPokemonVisible).map((pokemon) => (
+          {filteredPokemon.map((pokemon) => (
             <PokemonCard key={pokemon.name} {...pokemon} />
           ))}
           <div ref={infiniteScrollRef}></div>
