@@ -84,7 +84,7 @@ export default function Home(props) {
           )}
         </div>
 
-        <div className="flex w-full flex-wrap justify-center gap-5">
+        <div className="flex w-full flex-wrap justify-center gap-2 lg:gap-4">
           {filteredPokemon.slice(0, numberOfPokemonVisible).map((pokemon) => (
             <PokemonCard key={pokemon.name} {...pokemon} />
           ))}
