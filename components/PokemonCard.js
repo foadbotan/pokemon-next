@@ -9,16 +9,23 @@ function Pokemon({ name, id, url, types, image }) {
   return (
     <Link href={`/${name}`}>
       <div
-        className="relative flex h-fit w-24 cursor-pointer flex-col overflow-hidden rounded-2xl border-2 transition hover:scale-105 sm:w-32 lg:w-44"
-        style={{ backgroundColor: color, borderColor: color }}
+        className="relative flex aspect-square w-28 cursor-pointer flex-col overflow-hidden rounded-xl border-2 bg-white transition hover:scale-105 sm:w-36 lg:w-44"
+        style={{ borderColor: color }}
       >
-        <p className="absolute top-2 right-2 text-xs" style={{ color }}>
+        <p className="absolute right-2 top-1 text-xs" style={{ color }}>
           #{`${id}`.padStart(3, "0")}
         </p>
-        <div className="flex aspect-square w-full items-end  rounded-xl bg-white px-2">
+        <div
+          className="absolute top-0 right-0 aspect-square w-60 rounded-full sm:w-96"
+          style={{ backgroundColor: color }}
+        ></div>
+        <div className="p-5">
           <Image src={image} width="200" height="200" alt={name} />
         </div>
-        <h3 className="p-1 text-center text-xs font-bold capitalize leading-none text-white sm:text-sm lg:text-base">
+        <h3
+          className="absolute bottom-0 left-0 w-full p-2 text-xs font-bold capitalize text-white sm:text-sm lg:text-base"
+          style={{ textShadow: `0 0 2px ${color}` }}
+        >
           {name}
         </h3>
       </div>
