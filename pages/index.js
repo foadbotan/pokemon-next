@@ -25,7 +25,9 @@ export default function Home(props) {
   } = props;
   const infiniteScrollRef = useInfiniteScroll(displayMorePokemon);
   const filteredPokemon = allPokemon
-    .filter(({ name, id }) => name.includes(searchFilter) || id.startsWith(searchFilter))
+    .filter(
+      ({ name, id }) => name.includes(searchFilter.toLowerCase()) || id.startsWith(searchFilter)
+    )
     .filter((pokemon) => typeFilter.every((type) => pokemon.types.includes(type.value)));
 
   function displayMorePokemon() {
