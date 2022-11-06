@@ -4,7 +4,7 @@ import Error from "../components/Error";
 import Select from "react-select";
 import { capitalize } from "../utils";
 import Head from "next/head";
-import Navbar from "../components/Navbar";
+import NavbarHome from "../components/Navbar/NavbarHome";
 
 const TYPE_URL = `https://pokeapi.co/api/v2/type`;
 const IMAGES_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/`;
@@ -43,12 +43,12 @@ export default function Home(props) {
   if (error) return <Error error={error} />;
 
   return (
-    <main className="min-h-screen bg-gray-200">
-      <Navbar />
+    <div className="min-h-screen bg-gray-200">
+      <Head>
+        <title>Pokedex</title>
+      </Head>
       <div className="container mx-auto flex flex-col">
-        <Head>
-          <title>Pokedex</title>
-        </Head>
+        <NavbarHome />
         <div className="mb-5 flex flex-col items-center justify-center gap-5 sm:flex-row">
           <input
             value={searchFilter}
@@ -92,7 +92,7 @@ export default function Home(props) {
         </div>
         <div ref={infiniteScrollRef}></div>
       </div>
-    </main>
+    </div>
   );
 }
 
