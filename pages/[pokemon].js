@@ -27,7 +27,7 @@ export default function Pokemon(props) {
           {japaneseName}
         </p>
         <div className="flex justify-center">
-          {image && <Image src={image} alt={name} width="500" height="500" />}
+          {image && <Image src={image} alt={name} width="400" height="400" />}
         </div>
         <div className="flex flex-wrap gap-4">
           {types.map((type) => (
