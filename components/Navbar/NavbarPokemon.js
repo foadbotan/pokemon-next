@@ -8,10 +8,10 @@ export default function NavbarPokemon({ name, id }) {
         <Link href="/">
           <div className="flex cursor-pointer items-center gap-2 transition hover:text-black hover:opacity-70">
             <BackArrow size="30" />
-            <p className="text-2xl font-black ">{name}</p>
+            <p className="text-3xl font-black">{name}</p>
           </div>
         </Link>
-        <p className="text-xs font-bold">#{`${id}`.padStart(3, "0")}</p>
+        <p className="font-bold">#{`${id}`.padStart(3, "0")}</p>
       </div>
     </header>
   );

@@ -26,12 +26,11 @@ export default function Home(props) {
   const infiniteScrollRef = useInfiniteScroll(displayMorePokemon);
   const filteredPokemon = allPokemon
     .filter(({ name, id }) => name.includes(searchFilter) || id.startsWith(searchFilter))
-    .filter((pokemon) => typeFilter.every((type) => pokemon.types.includes(type.value)))
-    .slice(0, numberOfPokemonVisible);
+    .filter((pokemon) => typeFilter.every((type) => pokemon.types.includes(type.value)));
 
   function displayMorePokemon() {
     if (numberOfPokemonVisible > filteredPokemon.length) return;
-    setNumberOfPokemonVisible((prev) => prev + 5);
+    setNumberOfPokemonVisible((prev) => prev + 10);
   }
 
   function resetFilters() {
@@ -85,8 +84,8 @@ export default function Home(props) {
           )}
         </div>
 
-        <div className="flex w-full flex-wrap justify-center gap-5">
-          {filteredPokemon.map((pokemon) => (
+        <div className="flex w-full flex-wrap justify-center gap-2 lg:gap-4">
+          {filteredPokemon.slice(0, numberOfPokemonVisible).map((pokemon) => (
             <PokemonCard key={pokemon.name} {...pokemon} />
           ))}
         </div>

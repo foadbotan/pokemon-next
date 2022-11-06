@@ -26,8 +26,8 @@ export default function Pokemon(props) {
         <p className="absolute w-full text-center text-[min(20vw,8rem)] font-black leading-none opacity-70">
           {japaneseName}
         </p>
-        <div className="relative mx-auto aspect-square w-2/3 max-w-sm justify-center">
-          <Image src={image} alt={name} layout="fill" />
+        <div className="flex justify-center">
+          {image && <Image src={image} alt={name} width="500" height="500" />}
         </div>
         <div className="flex flex-wrap gap-4">
           {types.map((type) => (
