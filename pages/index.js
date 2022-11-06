@@ -9,34 +9,47 @@ import { capitalize } from "../utils";
 const TYPE_URL = `https://pokeapi.co/api/v2/type`;
 const IMAGES_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/`;
 
-export default function Home({ allPokemon, types, error }) {
-  const [search, setSearch] = useState("");
+export default function Home(props) {
+  const {
+    allPokemon,
+    allTypes,
+    error,
+
+    searchFilter,
+    typeFilter,
+    numberOfPokemonVisible,
+
+    setSearchFilter,
+    setTypeFilter,
+    setNumberOfPokemonVisible,
+  } = props;
+
   const [pokemon, setPokemon] = useState([]);
-  const [selectedTypes, setSelectedTypes] = useState([]);
-  const [numberOfPokemon, setNumberOfPokemon] = useState(10);
   const infiniteScrollRef = useInfiniteScroll(displayMorePokemon);
 
   function displayMorePokemon() {
-    if (numberOfPokemon > pokemon.length) return;
-    setNumberOfPokemon((prev) => prev + 5);
+    if (numberOfPokemonVisible > pokemon.length) return;
+    setNumberOfPokemonVisible((prev) => prev + 5);
   }
 
   function reset() {
-    setSearch("");
-    setSelectedTypes([]);
-    setNumberOfPokemon(0);
+    setSearchFilter("");
+    setTypeFilter([]);
+    setNumberOfPokemonVisible(0);
   }
 
   useEffect(() => {
-    setNumberOfPokemon(10);
+    setNumberOfPokemonVisible(10);
     setPokemon(() => {
       return allPokemon
-        .filter(({ name, id }) => name.includes(search.toLowerCase()) || id.startsWith(search))
-        .filter(({ types }) => selectedTypes.every((type) => types.includes(type.value)));
+        .filter(
+          ({ name, id }) => name.includes(searchFilter.toLowerCase()) || id.startsWith(searchFilter)
+        )
+        .filter(({ types }) => typeFilter.every((type) => types.includes(type.value)));
     });
     // scroll to top when search or type changes
     window.scrollTo(0, 0);
-  }, [search, allPokemon, selectedTypes]);
+  }, [searchFilter, allPokemon, typeFilter]);
 
   if (error) return <Error error={error} />;
 
@@ -45,16 +58,16 @@ export default function Home({ allPokemon, types, error }) {
       <div className="container mx-auto flex flex-col">
         <div className="mb-5 flex flex-col items-center justify-center gap-5 sm:flex-row">
           <input
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            value={searchFilter}
+            onChange={(e) => setSearchFilter(e.target.value)}
             className="w-[250px] rounded-md border border-zinc-300 p-1.5"
             placeholder="Search by name or id"
           />
           <Select
-            options={types}
+            options={allTypes}
             isMulti
-            value={selectedTypes}
-            onChange={(selected) => setSelectedTypes(selected)}
+            value={typeFilter}
+            onChange={(selected) => setTypeFilter(selected)}
             className="min-w-[250px]"
             placeholder="Select type"
             instanceId="type-select" // fixes warning about duplicate ids
@@ -80,7 +93,7 @@ export default function Home({ allPokemon, types, error }) {
         </div>
 
         <div className="flex w-full flex-wrap justify-center gap-5">
-          {pokemon.slice(0, numberOfPokemon).map((pokemon) => (
+          {pokemon.slice(0, numberOfPokemonVisible).map((pokemon) => (
             <PokemonCard key={pokemon.name} {...pokemon} />
           ))}
           <div ref={infiniteScrollRef}></div>
@@ -122,7 +135,7 @@ export async function getStaticProps() {
     return {
       props: {
         allPokemon: Object.values(allPokemon).sort((a, b) => a.id - b.id),
-        types: typesData.results.map(({ name }) => ({ value: name, label: capitalize(name) })),
+        allTypes: typesData.results.map(({ name }) => ({ value: name, label: capitalize(name) })),
       },
     };
   } catch (error) {
