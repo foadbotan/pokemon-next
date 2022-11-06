@@ -1,9 +1,8 @@
-import Layout from "./Layout";
 import Link from "next/link";
 
 export default function Error404({ error, query }) {
   return (
-    <Layout className="text-center">
+    <div className="text-center">
       <h1 className="mb-2 text-2xl text-red-500">ERROR 404: {error}</h1>
       <p className="text-center">Pokemon: {query.pokemon}</p>
       <Link href="/">
@@ -11,6 +10,6 @@ export default function Error404({ error, query }) {
           ← Return Home
         </button>
       </Link>
-    </Layout>
+    </div>
   );
 }

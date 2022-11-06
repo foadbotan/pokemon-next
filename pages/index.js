@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useRef, useState } from "react";
 import PokemonCard from "../components/PokemonCard";
-import Layout from "../components/Layout";
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
 import Error from "../components/Error";
 import Select from "react-select";
 import { capitalize } from "../utils";
+import Head from "next/head";
+import Navbar from "../components/Navbar";
 
 const TYPE_URL = `https://pokeapi.co/api/v2/type`;
 const IMAGES_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/`;
@@ -43,8 +43,12 @@ export default function Home(props) {
   if (error) return <Error error={error} />;
 
   return (
-    <Layout>
+    <main className="min-h-screen bg-gray-200">
+      <Navbar />
       <div className="container mx-auto flex flex-col">
+        <Head>
+          <title>Pokedex</title>
+        </Head>
         <div className="mb-5 flex flex-col items-center justify-center gap-5 sm:flex-row">
           <input
             value={searchFilter}
@@ -85,10 +89,10 @@ export default function Home(props) {
           {filteredPokemon.map((pokemon) => (
             <PokemonCard key={pokemon.name} {...pokemon} />
           ))}
-          <div ref={infiniteScrollRef}></div>
         </div>
+        <div ref={infiniteScrollRef}></div>
       </div>
-    </Layout>
+    </main>
   );
 }
 
