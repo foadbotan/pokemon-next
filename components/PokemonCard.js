@@ -10,7 +10,7 @@ function Pokemon({ name, id, types }) {
   return (
     <Link href={`/${name}`}>
       <div
-        className="relative flex aspect-square w-28 cursor-pointer flex-col overflow-hidden rounded-xl bg-white transition hover:scale-105 hover:border-2 sm:w-36"
+        className="relative flex aspect-square w-28 cursor-pointer flex-col overflow-hidden rounded-xl bg-white transition hover:border-2 sm:w-36"
         style={{ borderColor: color }}
       >
         <div className="absolute -top-5 -left-5 flex w-[150%] rotate-12 items-end gap-5 opacity-80">
