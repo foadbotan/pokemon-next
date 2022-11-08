@@ -3,7 +3,7 @@ import { IoArrowBackOutline as BackArrow } from "react-icons/io5";
 
 export default function NavbarPokemon({ name, id }) {
   return (
-    <header className="container mx-auto p-5">
+    <header className="container mx-auto p-5 sm:py-8">
       <div className="flex items-center justify-between text-white">
         <Link href="/">
           <div className="flex cursor-pointer items-center gap-2 transition hover:text-black hover:opacity-70">
