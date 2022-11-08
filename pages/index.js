@@ -51,7 +51,7 @@ export default function Home(props) {
       </Head>
       <div className="container mx-auto flex flex-col gap-2 pb-5">
         <NavbarHome />
-        <div className="flex flex-col items-center justify-center gap-2 px-5 sm:flex-row">
+        <div className="flex flex-col items-center justify-center gap-2 sm:flex-row">
           <div className="flex w-full items-center rounded-md border border-zinc-300 bg-white outline-2 outline-blue-500 focus-within:outline">
             <SearchIcon className="mx-2" />
             <span className="h-5 w-px bg-gray-300"></span>
