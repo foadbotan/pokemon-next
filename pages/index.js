@@ -8,7 +8,6 @@ import NavbarHome from "../components/Navbar/NavbarHome";
 import { BsSearch as SearchIcon } from "react-icons/bs";
 
 const TYPE_URL = `https://pokeapi.co/api/v2/type`;
-const IMAGES_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/`;
 
 export default function Home(props) {
   const {
@@ -119,10 +118,8 @@ export async function getStaticProps() {
         const id = pokemon.url.split("/")[6];
         allPokemon[pokemon.name] = {
           name: pokemon.name,
-          url: pokemon.url,
           types: [pokemon.type],
           id,
-          image: `${IMAGES_URL}${id}.png`,
         };
       }
     });

@@ -3,7 +3,9 @@ import Link from "next/link";
 import { memo } from "react";
 import { COLORS } from "../constants/colors";
 
-function Pokemon({ name, id, url, types, image }) {
+const IMAGES_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/`;
+
+function Pokemon({ name, id, types }) {
   const color = COLORS[types[0]];
   return (
     <Link href={`/${name}`}>
@@ -36,7 +38,7 @@ function Pokemon({ name, id, url, types, image }) {
           #{`${id}`.padStart(3, "0")}
         </p>
         <div className="p-5">
-          <Image src={image} width="200" height="200" alt={name} />
+          <Image src={`${IMAGES_URL}${id}.png`} width="200" height="200" alt={name} />
         </div>
         <h3
           className="absolute bottom-0 left-0 w-full p-2 text-center text-xs font-bold capitalize sm:text-sm"
