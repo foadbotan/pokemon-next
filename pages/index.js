@@ -5,6 +5,7 @@ import Select from "react-select";
 import { capitalize } from "../utils";
 import Head from "next/head";
 import NavbarHome from "../components/Navbar/NavbarHome";
+import { BsSearch as SearchIcon } from "react-icons/bs";
 
 const TYPE_URL = `https://pokeapi.co/api/v2/type`;
 const IMAGES_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/`;
@@ -48,28 +49,28 @@ export default function Home(props) {
       <Head>
         <title>Pokedex</title>
       </Head>
-      <div className="container mx-auto flex flex-col">
+      <div className="container mx-auto flex flex-col gap-2 pb-5">
         <NavbarHome />
-        <div className="mb-5 flex flex-col items-center justify-center gap-5 sm:flex-row">
-          <input
-            value={searchFilter}
-            onChange={(e) => setSearchFilter(e.target.value)}
-            className="w-[250px] rounded-md border border-zinc-300 p-1.5"
-            placeholder="Search by name or id"
-          />
+        <div className="flex flex-col items-center justify-center gap-2 px-5 sm:flex-row">
+          <div className="flex w-full items-center rounded-md border border-zinc-300 bg-white outline-2 outline-blue-500 focus-within:outline">
+            <SearchIcon className="mx-2" />
+            <span className="h-5 w-px bg-gray-300"></span>
+            <input
+              value={searchFilter}
+              onChange={(e) => setSearchFilter(e.target.value)}
+              placeholder="Search..."
+              className="w-full bg-transparent py-1 px-4 outline-none"
+            />
+          </div>
           <Select
             options={allTypes}
             isMulti
             value={typeFilter}
             onChange={(selected) => setTypeFilter(selected)}
-            className="min-w-[250px]"
+            className="w-full"
             placeholder="Select type"
             instanceId="type-select" // fixes warning about duplicate ids
           />
-
-          <p className="text-center text-sm">
-            Showing {filteredPokemon.length} of {allPokemon.length} Pokemon
-          </p>
         </div>
 
         <div>
