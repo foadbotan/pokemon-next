@@ -127,7 +127,9 @@ export async function getStaticProps() {
     return {
       props: {
         allPokemon: Object.values(allPokemon).sort((a, b) => a.id - b.id),
-        allTypes: typesData.results.map(({ name }) => ({ value: name, label: capitalize(name) })),
+        allTypes: typesData.results
+          .filter(({ name }) => name !== "unknown" && name !== "shadow") // remove unused pokemon types "shadow" and "unknown"
+          .map(({ name }) => ({ value: name, label: capitalize(name) })),
       },
     };
   } catch (error) {
