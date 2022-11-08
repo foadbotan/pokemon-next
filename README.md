@@ -20,7 +20,7 @@ Given the large number of Pokemon, using a similar SSG approach for the individu
 
 ### Challenges overcome:
 
-- Optimizing the number of API calls from 1,155 to 21
+- Optimizing the number of API calls from 1,155 to 22
 - Creating a custom useInfiniteScroll hook
 
 <img src="screenshot.png" />

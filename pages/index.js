@@ -7,7 +7,7 @@ import Head from "next/head";
 import NavbarHome from "../components/Navbar/NavbarHome";
 import { BsSearch as SearchIcon } from "react-icons/bs";
 
-const TYPE_URL = `https://pokeapi.co/api/v2/type`;
+const BASE_URL = "https://pokeapi.co/api/v2";
 
 export default function Home(props) {
   const {
@@ -23,6 +23,7 @@ export default function Home(props) {
     setTypeFilter,
     setNumberOfPokemonVisible,
   } = props;
+
   const infiniteScrollRef = useInfiniteScroll(displayMorePokemon);
   const filteredPokemon = allPokemon
     .filter(
@@ -97,39 +98,49 @@ export default function Home(props) {
   );
 }
 
+// HACK: 1155 api calls to 22
+// Instead of fetching all 1154 Pokemon, one by one to get the types,
+// I fetch the types (20) list and compare it to the pokemon list
+// I'm not sure if this is faster, but it makes me happy :)
 export async function getStaticProps() {
   try {
-    // HACK: Instead of fetching all the pokemon (1154) one by one to get the types,
-    // we can fetch the types (20) and get the pokemon from the types.
-    // I'm not sure if this is faster, but it makes me happy :)
-    const typesData = await fetch(TYPE_URL).then((res) => res.json());
-    const types = await Promise.all(
+    // fetch list of all types
+    const typesData = await fetch(`${BASE_URL}/type`).then((res) => res.json());
+    // fetch list of pokemon belonging to each type
+    const allTypes = await Promise.all(
       typesData.results.map(async (type) => {
         const { pokemon } = await fetch(type.url).then((res) => res.json());
-        return pokemon.map(({ pokemon }) => ({ ...pokemon, type: type.name }));
+        return {
+          type: type.name,
+          pokemonList: pokemon.map(({ pokemon }) => pokemon.name),
+        };
       })
     );
 
-    const allPokemon = {};
-    types.flat().forEach((pokemon) => {
-      if (allPokemon[pokemon.name]) {
-        allPokemon[pokemon.name].types.push(pokemon.type);
-      } else {
-        const id = pokemon.url.split("/")[6];
-        allPokemon[pokemon.name] = {
-          name: pokemon.name,
-          types: [pokemon.type],
-          id,
-        };
-      }
+    // fetch list of all Pokemon
+    const pokemonData = await fetch(`${BASE_URL}/pokemon/?limit=-1`).then((res) => res.json());
+    const allPokemon = pokemonData.results.map(({ name, url }) => {
+      const types = [];
+
+      // get types for each Pokemon
+      allTypes.forEach(({ type, pokemonList }) => {
+        if (pokemonList.includes(name)) types.push(type);
+      });
+
+      return {
+        name,
+        url,
+        types,
+        id: url.split("/")[6],
+      };
     });
 
     return {
       props: {
-        allPokemon: Object.values(allPokemon).sort((a, b) => a.id - b.id),
-        allTypes: typesData.results
-          .filter(({ name }) => name !== "unknown" && name !== "shadow") // remove unused pokemon types "shadow" and "unknown"
-          .map(({ name }) => ({ value: name, label: capitalize(name) })),
+        allPokemon,
+        allTypes: allTypes
+          .map(({ type }) => ({ value: type, label: capitalize(type) })) // format type options for react-select
+          .filter(({ name }) => name !== "unknown" && name !== "shadow"), // remove unused pokemon types "shadow" and "unknown"
       },
     };
   } catch (error) {
