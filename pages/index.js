@@ -47,7 +47,7 @@ export default function Home(props) {
   }
 
   return (
-    <div className="min-h-screen bg-gray-200">
+    <div className="min-h-screen bg-stone-200">
       <Head>
         <title>Pokedex</title>
       </Head>

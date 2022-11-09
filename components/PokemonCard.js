@@ -9,10 +9,7 @@ function Pokemon({ name, id, types }) {
   const color = COLORS[types[0]];
   return (
     <Link href={`/${name}`}>
-      <div
-        className="relative flex aspect-square w-28 cursor-pointer flex-col overflow-hidden rounded-xl bg-white transition hover:border-2 sm:w-36"
-        style={{ borderColor: color }}
-      >
+      <div className="group relative flex aspect-square w-[clamp(6rem,20vw,12rem)] cursor-pointer flex-col overflow-hidden rounded-xl bg-white shadow ">
         <div className="absolute -top-5 -left-5 flex w-[150%] rotate-12 items-end gap-5 opacity-80">
           {types.map((type, i) => (
             <div
@@ -37,7 +34,7 @@ function Pokemon({ name, id, types }) {
         <p className="absolute right-2 top-1 text-xs" style={{ color }}>
           #{`${id}`.padStart(3, "0")}
         </p>
-        <div className="p-5">
+        <div className="p-5 transition group-hover:scale-125">
           <Image src={`${IMAGES_URL}${id}.png`} width="200" height="200" alt={name} />
         </div>
         <h3
