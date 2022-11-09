@@ -1,10 +1,10 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Head from "next/head";
-import Error404 from "../components/Error404";
-import { COLORS } from "../constants/colors";
-import { capitalize } from "../utils";
-import NavbarPokemon from "../components/Navbar/NavbarPokemon";
+import Error404 from "/components/errors/Error404";
+import { COLORS } from "/constants/colors";
+import { capitalize } from "/utils";
+import NavbarPokemonPage from "/components/Navbar/NavbarPokemonPage";
 
 const URL = "https://pokeapi.co/api/v2/pokemon/";
 
@@ -21,7 +21,7 @@ export default function Pokemon(props) {
       <Head>
         <title>{name}</title>
       </Head>
-      <NavbarPokemon name={name} id={id} />
+      <NavbarPokemonPage name={name} id={id} />
       <div className="container relative mx-auto">
         <p className="absolute w-full text-center text-[min(20vw,8rem)] font-black leading-none opacity-70">
           {japaneseName}

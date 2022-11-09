@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { IoArrowBackOutline as BackArrow } from "react-icons/io5";
 
-export default function NavbarPokemon({ name, id }) {
+export default function NavbarPokemonPage({ name, id }) {
   return (
     <header className="container mx-auto py-5 sm:py-8">
       <div className="flex items-center justify-between text-white">
