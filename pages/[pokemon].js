@@ -23,7 +23,7 @@ export default function Pokemon(props) {
       </Head>
       <NavbarPokemonPage name={name} id={id} />
       <div className="container relative mx-auto">
-        <p className="absolute w-full text-center text-[min(20vw,8rem)] font-black leading-none opacity-70">
+        <p className="absolute left-0 w-full text-center text-[min(15vw,8rem)] font-black leading-none opacity-70">
           {japaneseName}
         </p>
         <div className="flex justify-center px-[15vw] drop-shadow-lg">
