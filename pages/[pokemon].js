@@ -57,6 +57,23 @@ export default function Pokemon(props) {
         </div>
       </section>
 
+      <div className="flex justify-evenly">
+        {types.map((type) => (
+          <Link key={type} href="/">
+            <button
+              onClick={() => setTypeFilter([{ value: type, label: capitalize(type) }])}
+              className="flex cursor-pointer items-center gap-1 rounded-full border border-white py-1 px-3 text-center text-xs font-medium uppercase text-white hover:brightness-90 sm:py-2 sm:px-5 sm:text-base"
+              style={{ backgroundColor: COLORS[type] }}
+            >
+              <div className="flex w-3 sm:w-5">
+                <Image src={`/icons/${type}.svg`} alt={type} width="24" height="24" />
+              </div>
+              {capitalize(type)}
+            </button>
+          </Link>
+        ))}
+      </div>
+
       <section className="container mx-auto">
         <h2 className="m-2 text-center text-xl font-bold sm:m-10">Evolution Chain</h2>
         <div className="flex justify-evenly">
@@ -87,38 +104,21 @@ export default function Pokemon(props) {
               <p className="font-light">{capitalize(descriptions[0])}</p>
             </div>
 
-            <div className="flex justify-between">
-              <div className="flex flex-col justify-between">
-                <p>
-                  <span className="mr-2 font-bold">Weight:</span>
-                  <span className="font-light">{weight}kg</span>
-                </p>
-                <p>
-                  <span className="mr-2 font-bold">Height:</span>
-                  <span className="font-light">{height}cm</span>
-                </p>
-                <p>
-                  <span className="mr-2 font-bold">Abilities:</span>
-                  <span className="font-light">
-                    {abilities.map((ability) => capitalize(ability)).join(", ")}
-                  </span>
-                </p>
-              </div>
-
-              <div className="flex flex-col justify-end gap-2">
-                {types.map((type) => (
-                  <Link key={type} href="/">
-                    <button
-                      onClick={() => setTypeFilter([{ value: type, label: capitalize(type) }])}
-                      className="flex cursor-pointer items-center gap-1 rounded-full border border-white py-1 px-3 text-center  font-medium uppercase text-white hover:brightness-90"
-                      style={{ backgroundColor: COLORS[type] }}
-                    >
-                      <Image src={`/icons/${type}.svg`} alt={type} width="18" height="18" />
-                      {capitalize(type)}
-                    </button>
-                  </Link>
-                ))}
-              </div>
+            <div className="flex flex-col justify-between">
+              <p>
+                <span className="mr-2 font-bold">Weight:</span>
+                <span className="font-light">{weight}kg</span>
+              </p>
+              <p>
+                <span className="mr-2 font-bold">Height:</span>
+                <span className="font-light">{height}cm</span>
+              </p>
+              <p>
+                <span className="mr-2 font-bold">Abilities:</span>
+                <span className="font-light">
+                  {abilities.map((ability) => capitalize(ability)).join(", ")}
+                </span>
+              </p>
             </div>
           </div>
           <div className="flex w-full max-w-[400px] flex-col ">
