@@ -59,7 +59,7 @@ export default function Home(props) {
       <header className="mx-auto w-48 py-5 sm:w-80 sm:py-10">
         <Image src="/pokemon-logo.svg" width="300" height="50" alt="Pokemon logo" />
       </header>
-      <div className="container mx-auto">
+      <div className="container mx-auto flex flex-col gap-4 lg:flex-row lg:items-start">
         <FilterControls
           searchFilter={searchFilter}
           setSearchFilter={setSearchFilter}
@@ -68,7 +68,7 @@ export default function Home(props) {
           allTypes={allTypes}
         />
 
-        <div className="mt-5 flex w-full flex-wrap justify-center gap-2 lg:gap-4">
+        <div className="flex w-full flex-wrap justify-center gap-2 lg:gap-4">
           {filteredPokemon.slice(0, numberOfPokemonVisible).map((pokemon) => (
             <PokemonCard key={pokemon.name} {...pokemon} />
           ))}

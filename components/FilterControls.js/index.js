@@ -4,7 +4,7 @@ import { BsSearch as SearchIcon } from "react-icons/bs";
 export default function FilterControls(props) {
   const { searchFilter, setSearchFilter, typeFilter, setTypeFilter, allTypes } = props;
   return (
-    <div className="flex flex-col items-center justify-center gap-2 sm:flex-row">
+    <div className="flex flex-col items-center justify-center gap-2 sm:flex-row lg:w-80 lg:flex-col">
       <div className="flex w-full items-center rounded-md border border-zinc-300 bg-white outline-2 outline-blue-500 focus-within:outline">
         <SearchIcon className="mx-2" />
         <span className="h-5 w-px bg-gray-300"></span>
