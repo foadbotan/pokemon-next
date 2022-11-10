@@ -7,7 +7,7 @@ import Image from "next/image";
 import FilterControls from "../components/FilterControls.js";
 import ErrorSearchEmpty from "../components/errors/ErrorSearchEmpty";
 
-const BASE_URL = "https://pokeapi.co/api/v2";
+export const BASE_URL = "https://pokeapi.co/api/v2";
 const POKEMON_URL = `${BASE_URL}/pokemon/?limit=-1`;
 const TYPES_URL = `${BASE_URL}/type`;
 
