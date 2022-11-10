@@ -1,4 +1,4 @@
-export default function StatsBar({ stat }) {
+export default function StatsBar({ stat, isDark }) {
   const percent = Math.round((stat.base_stat / 255) * 100);
 
   return (
@@ -9,8 +9,11 @@ export default function StatsBar({ stat }) {
           {stat.base_stat} <span className="text-[8px]"> / 255</span>
         </span>
       </div>
-      <div className="w-full rounded-full bg-[hsla(0,0%,100%,0.3)]">
-        <div className="h-2.5 rounded-full bg-white" style={{ width: `${percent}%` }}></div>
+      <div className={`w-full rounded-full bg-opacity-20 ${isDark ? "bg-black" : "bg-white"}`}>
+        <div
+          className={`h-2.5 rounded-full ${isDark ? "bg-black" : "bg-white"}`}
+          style={{ width: `${percent}%` }}
+        ></div>
       </div>
     </div>
   );

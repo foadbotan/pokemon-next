@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { IoArrowBackOutline as BackArrow } from "react-icons/io5";
 
-export default function NavbarPokemonPage({ name, id }) {
+export default function NavbarPokemonPage({ name, id, isDark }) {
   return (
     <header className="container mx-auto py-5 sm:py-8">
-      <div className="flex items-center justify-between text-white">
+      <div className={`flex items-center justify-between ${isDark ? "text-black" : "text-white"}`}>
         <Link href="/">
-          <div className="flex cursor-pointer items-center gap-2 transition hover:text-black hover:opacity-70">
+          <div className="flex cursor-pointer items-center gap-2 transition hover:text-black hover:opacity-60">
             <BackArrow size="30" />
             <p className="text-3xl font-black">{name}</p>
           </div>

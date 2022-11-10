@@ -19,7 +19,6 @@ export default function Pokemon(props) {
     abilities,
     types,
     image,
-    moves,
     id,
     stats,
     japaneseName,
@@ -31,19 +30,23 @@ export default function Pokemon(props) {
     varieties,
     setTypeFilter,
   } = props;
-  const backgroundColor = color === "white" ? COLORS[types[0]] : COLORS[color];
+
+  const isDark = color === "white";
 
   const router = useRouter();
   const query = router.query;
   if (error) return <Error404 error={error} query={query} />;
 
   return (
-    <div className="flex min-h-screen flex-col gap-4 pb-10 text-white" style={{ backgroundColor }}>
+    <div
+      className={`flex min-h-screen flex-col gap-4 pb-10 ${isDark ? "text-black" : "text-white"}`}
+      style={{ backgroundColor: COLORS[color] }}
+    >
       <Head>
         <title>{name}</title>
       </Head>
 
-      <NavbarPokemonPage name={name} id={id} />
+      <NavbarPokemonPage name={name} id={id} isDark={isDark} />
 
       <section className="container relative mx-auto">
         <p className="absolute left-0 w-full text-center text-[min(15vw,8rem)] font-black leading-none text-black opacity-70">
@@ -120,7 +123,7 @@ export default function Pokemon(props) {
           </div>
           <div className="flex w-full max-w-[400px] flex-col ">
             {stats.map((stat) => (
-              <StatsBar key={stat.name} stat={stat} />
+              <StatsBar key={stat.name} stat={stat} isDark={isDark} />
             ))}
           </div>
         </div>
