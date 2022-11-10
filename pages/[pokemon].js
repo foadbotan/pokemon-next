@@ -105,17 +105,17 @@ export default function Pokemon(props) {
                 </p>
               </div>
 
-              <div className="flex flex-col justify-center gap-2">
+              <div className="flex flex-col justify-end gap-2">
                 {types.map((type) => (
                   <Link key={type} href="/">
-                    <div
+                    <button
                       onClick={() => setTypeFilter([{ value: type, label: capitalize(type) }])}
-                      className="flex cursor-pointer items-center gap-1 rounded-full border border-white py-1 px-3 text-center text-xs font-medium uppercase text-white hover:brightness-90"
+                      className="flex cursor-pointer items-center gap-1 rounded-full border border-white py-1 px-3 text-center  font-medium uppercase text-white hover:brightness-90"
                       style={{ backgroundColor: COLORS[type] }}
                     >
-                      <Image src={`/icons/${type}.svg`} alt={type} width="16" height="16" />
+                      <Image src={`/icons/${type}.svg`} alt={type} width="18" height="18" />
                       {capitalize(type)}
-                    </div>
+                    </button>
                   </Link>
                 ))}
               </div>
