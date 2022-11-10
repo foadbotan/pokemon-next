@@ -3,7 +3,7 @@ import Link from "next/link";
 import { memo } from "react";
 import { COLORS } from "../constants/colors";
 
-const IMAGES_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/`;
+export const IMAGES_URL = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/`;
 
 function Pokemon({ name, id, types }) {
   const color = COLORS[types[0]];
