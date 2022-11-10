@@ -19,7 +19,7 @@ export const COLORS = {
   steel: "#5695A3",
   water: "#539DDF",
   // pokemon colors
-  white: "#FFFF",
+  white: "#F5F5F5",
   black: "#000",
   gray: "#9CA3AF",
   red: "#F87171",
