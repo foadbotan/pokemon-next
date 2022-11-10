@@ -78,7 +78,12 @@ export default function Pokemon(props) {
         <h2 className="m-2 text-center text-xl font-bold sm:m-10">Stats</h2>
 
         <div className="flex flex-wrap justify-center gap-8 sm:flex-row-reverse">
-          <div className="flex max-w-[400px] flex-col justify-between gap-4 ">
+          <div className="flex max-w-[400px] flex-col justify-between gap-4">
+            <div>
+              <h3 className="py-1 font-bold">Description</h3>
+              <p className="font-light">{capitalize(descriptions[0])}</p>
+            </div>
+
             <div className="flex justify-between">
               <div className="flex flex-col justify-between">
                 <p>
@@ -88,6 +93,12 @@ export default function Pokemon(props) {
                 <p>
                   <span className="mr-2 font-bold">Height:</span>
                   <span className="font-light">{height}cm</span>
+                </p>
+                <p>
+                  <span className="mr-2 font-bold">Abilities:</span>
+                  <span className="font-light">
+                    {abilities.map((ability) => capitalize(ability)).join(", ")}
+                  </span>
                 </p>
               </div>
 
@@ -105,10 +116,6 @@ export default function Pokemon(props) {
                   </Link>
                 ))}
               </div>
-            </div>
-            <div>
-              <h3 className="py-1 font-bold">Description</h3>
-              <p className="font-light">{capitalize(descriptions[0])}</p>
             </div>
           </div>
           <div className="flex w-full max-w-[400px] flex-col ">
