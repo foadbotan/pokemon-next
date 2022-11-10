@@ -50,6 +50,11 @@ export default function Home(props) {
     <div className="min-h-screen bg-neutral-100">
       <Head>
         <title>Pokedex</title>
+        <meta
+          name="description"
+          content="A Pokedex app created with React, Next.js, and Tailwind"
+        />
+        <link rel="icon" href="/pokeball.svg" />
       </Head>
       <header className="mx-auto w-48 py-5 sm:w-80 sm:py-10">
         <Image src="/pokemon-logo.svg" width="300" height="50" alt="Pokemon logo" />
