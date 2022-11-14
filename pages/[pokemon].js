@@ -30,6 +30,7 @@ export default function Pokemon(props) {
     evolutionChain,
     varieties,
     setTypeFilter,
+    setSearchFilter,
   } = props;
 
   const isDark = color === "white";
@@ -66,7 +67,10 @@ export default function Pokemon(props) {
                 type={type}
                 label={type}
                 className="px-3 py-1.5 text-xs"
-                onClick={() => setTypeFilter([{ value: type, label: capitalize(type) }])}
+                onClick={() => {
+                  setSearchFilter("");
+                  setTypeFilter([{ value: type, label: capitalize(type) }]);
+                }}
               />
             </a>
           </Link>
