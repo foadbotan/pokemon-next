@@ -12,6 +12,8 @@ import TypeButton from "../components/TypeButton";
 
 import { BASE_URL } from "/pages/index";
 import { IMAGES_URL } from "../components/PokemonCard";
+import { BsChevronLeft as LeftArrow } from "react-icons/bs";
+import { BsChevronRight as RightArrow } from "react-icons/bs";
 
 export default function Pokemon(props) {
   const {
@@ -38,6 +40,8 @@ export default function Pokemon(props) {
   const router = useRouter();
   const query = router.query;
   if (error) return <Error404 error={error} query={query} />;
+  const nextPokemon = parseInt(id) + 1;
+  const previousPokemon = parseInt(id) - 1;
 
   return (
     <div
@@ -57,6 +61,20 @@ export default function Pokemon(props) {
         <div className="flex justify-center px-[15vw] drop-shadow-lg">
           {image && <Image src={image} alt={name} width="400" height="400" />}
         </div>
+        {previousPokemon > 0 && (
+          <Link href={`/${previousPokemon}`}>
+            <a>
+              <LeftArrow size={30} className="absolute top-[50%] left-2 cursor-pointer" />
+            </a>
+          </Link>
+        )}
+        {nextPokemon < 1554 && (
+          <Link href={`/${nextPokemon}`}>
+            <a>
+              <RightArrow size={30} className="absolute top-[50%] right-2 cursor-pointer" />
+            </a>
+          </Link>
+        )}
       </section>
 
       <section className="flex justify-evenly">
