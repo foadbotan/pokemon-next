@@ -40,7 +40,7 @@ export default function Home(props) {
     setNumberOfPokemonVisible((prev) => prev + 10);
   }
 
-  function resetFilters() {
+  function clearFilters() {
     setSearchFilter("");
     setTypeFilter([]);
     setNumberOfPokemonVisible(0);
@@ -59,25 +59,26 @@ export default function Home(props) {
       <header className="mx-auto w-48 py-5 sm:w-80 sm:py-10">
         <Image src="/pokemon-logo.svg" width="300" height="50" alt="Pokemon logo" />
       </header>
-      <div className="container mx-auto flex flex-col gap-4 lg:flex-row lg:items-start">
+      <main className="container mx-auto flex flex-col gap-4">
         <FilterControls
           searchFilter={searchFilter}
           setSearchFilter={setSearchFilter}
           typeFilter={typeFilter}
           setTypeFilter={setTypeFilter}
           allTypes={allTypes}
+          clearFilters={clearFilters}
         />
 
-        <div className="flex w-full flex-wrap justify-center gap-2 lg:gap-4">
+        <section className="flex w-full flex-wrap justify-center gap-2 lg:gap-4">
           {filteredPokemon.slice(0, numberOfPokemonVisible).map((pokemon) => (
             <PokemonCard key={pokemon.name} {...pokemon} />
           ))}
-        </div>
+        </section>
 
-        {filteredPokemon.length === 0 && <ErrorSearchEmpty resetFilters={resetFilters} />}
+        {filteredPokemon.length === 0 && <ErrorSearchEmpty clearFilters={clearFilters} />}
 
         <div ref={infiniteScrollRef}></div>
-      </div>
+      </main>
     </div>
   );
 }
