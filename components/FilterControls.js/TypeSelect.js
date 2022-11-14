@@ -15,7 +15,7 @@ export default function TypeSelect({ allTypes, typeFilter, setTypeFilter }) {
         className="flex w-full items-center justify-between gap-4 rounded-2xl border bg-white py-1 px-3 outline-2 -outline-offset-1 outline-blue-500 focus:outline"
         tabIndex={0}
       >
-        <div className="flex items-center gap-2">
+        <div className="flex select-none items-center gap-2">
           <FilterIcon />
           <div>Type</div>
         </div>
