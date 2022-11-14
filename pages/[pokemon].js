@@ -8,6 +8,7 @@ import NavbarPokemonPage from "/components/Navbar/NavbarPokemonPage";
 import StatsBar from "../components/StatsBar";
 import Link from "next/link";
 import PokemonCard from "../components/PokemonCard";
+import TypeButton from "../components/TypeButton";
 
 import { BASE_URL } from "/pages/index";
 import { IMAGES_URL } from "../components/PokemonCard";
@@ -48,7 +49,7 @@ export default function Pokemon(props) {
 
       <NavbarPokemonPage name={name} id={id} isDark={isDark} />
 
-      <section className="container relative mx-auto">
+      <section className="container relative my-4 mx-auto">
         <p className="absolute left-0 w-full text-center text-[min(15vw,8rem)] font-black leading-none text-black opacity-70">
           {japaneseName}
         </p>
@@ -57,25 +58,23 @@ export default function Pokemon(props) {
         </div>
       </section>
 
-      <div className="flex justify-evenly">
+      <section className="flex justify-evenly">
         {types.map((type) => (
           <Link key={type} href="/">
-            <button
-              onClick={() => setTypeFilter([{ value: type, label: capitalize(type) }])}
-              className="flex cursor-pointer items-center gap-1 rounded-full border border-white py-1 px-3 text-center text-xs font-medium uppercase text-white hover:brightness-90 sm:py-2 sm:px-5 sm:text-base"
-              style={{ backgroundColor: COLORS[type] }}
-            >
-              <div className="flex w-3 sm:w-5">
-                <Image src={`/icons/${type}.svg`} alt={type} width="24" height="24" />
-              </div>
-              {capitalize(type)}
-            </button>
+            <a>
+              <TypeButton
+                type={type}
+                label={type}
+                className="px-3 py-1.5 text-xs"
+                onClick={() => setTypeFilter([{ value: type, label: capitalize(type) }])}
+              />
+            </a>
           </Link>
         ))}
-      </div>
+      </section>
 
-      <section className="container mx-auto">
-        <h2 className="m-2 text-center text-xl font-bold sm:m-10">Evolution Chain</h2>
+      <section className="container my-4 mx-auto">
+        <h2 className="my-2 text-xl font-bold sm:m-10">Evolution Chain</h2>
         <div className="flex justify-evenly">
           {evolutionChain.map((pokemon) => (
             <Link key={pokemon.name} href={`/${pokemon.name}`}>
@@ -94,8 +93,8 @@ export default function Pokemon(props) {
         </div>
       </section>
 
-      <section className="container mx-auto">
-        <h2 className="m-2 text-center text-xl font-bold sm:m-10">Stats</h2>
+      <section className="container my-4 mx-auto">
+        <h2 className="my-2 text-xl font-bold sm:m-10">Stats</h2>
 
         <div className="flex flex-wrap justify-center gap-8 sm:flex-row-reverse">
           <div className="flex max-w-[400px] flex-col justify-between gap-4">
@@ -130,8 +129,8 @@ export default function Pokemon(props) {
       </section>
 
       {varieties.length > 0 && (
-        <section className="container mx-auto ">
-          <h2 className="m-2 text-center text-xl font-bold sm:m-10">Variants</h2>
+        <section className="container my-4 mx-auto">
+          <h2 className="my-2 text-xl font-bold sm:m-10">Variants</h2>
 
           <div className="flex w-full flex-wrap justify-center gap-2 lg:gap-4">
             {varieties.map((variety) => (
