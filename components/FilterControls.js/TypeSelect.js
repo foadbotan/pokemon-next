@@ -1,11 +1,12 @@
-import { useRef, useState, useEffect } from "react";
+import { useState } from "react";
 
 import TypeButton from "../TypeButton";
 import { BsFilter as FilterIcon } from "react-icons/bs";
 import useClickOutside from "../../hooks/useClickOutside";
+import TypeDropdown from "./TypeDropdown";
 
 export default function TypeSelect({ allTypes, typeFilter, setTypeFilter }) {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(true);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const ref = useClickOutside(() => setIsDropdownOpen(false));
 
   return (
@@ -31,37 +32,7 @@ export default function TypeSelect({ allTypes, typeFilter, setTypeFilter }) {
           ))}
         </div>
       </div>
-      {isDropdownOpen && (
-        <div className="absolute top-11 z-10 flex gap-2 rounded-3xl border bg-white p-4">
-          <div>
-            {allTypes.slice(0, allTypes.length / 2).map((type) => (
-              <TypeButton
-                key={type.value}
-                type={type.value}
-                label={type.label}
-                className="mb-2 w-full py-1 px-3"
-                onClick={() => {
-                  console.log("clicked");
-                  setTypeFilter((prevTypes) => [...prevTypes, type]);
-                }}
-              />
-            ))}
-          </div>
-          <div>
-            {allTypes.slice(allTypes.length / 2).map((type) => (
-              <TypeButton
-                key={type.value}
-                type={type.value}
-                label={type.label}
-                className="mb-2 w-full py-1 px-3"
-                onClick={() => {
-                  setTypeFilter((prevTypes) => [...prevTypes, type]);
-                }}
-              />
-            ))}
-          </div>
-        </div>
-      )}
+      {isDropdownOpen && <TypeDropdown allTypes={allTypes} setTypeFilter={setTypeFilter} />}
     </div>
   );
 }
