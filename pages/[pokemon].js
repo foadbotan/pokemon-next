@@ -101,13 +101,15 @@ export default function Pokemon(props) {
           {evolutionChain.map((pokemon) => (
             <Link key={pokemon.name} href={`/${pokemon.name}`}>
               <div className="flex cursor-pointer flex-col gap-2">
-                <Image
-                  src={`${IMAGES_URL}${pokemon.id}.png`}
-                  alt={pokemon.name}
-                  width="150"
-                  height="150"
-                  className="opacity-30 brightness-0 transition hover:opacity-100 hover:brightness-100"
-                />
+                <div style={{ filter: "drop-shadow(1px 0 hsla(0,0%,100%,0.4))" }}>
+                  <Image
+                    src={`${IMAGES_URL}${pokemon.id}.png`}
+                    alt={pokemon.name}
+                    width="150"
+                    height="150"
+                    className="opacity-30 brightness-0 transition hover:opacity-100 hover:brightness-100"
+                  />
+                </div>
                 <p className="text-center capitalize">{pokemon.name}</p>
               </div>
             </Link>
