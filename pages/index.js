@@ -31,7 +31,7 @@ export default function Home(props) {
 
   const filteredPokemon = allPokemon
     .filter(
-      ({ name, id }) => name.includes(searchFilter.toLowerCase()) || id.startsWith(searchFilter)
+      ({ name, id }) => name.includes(searchFilter.toLowerCase()) || id.endsWith(searchFilter)
     )
     .filter((pokemon) => typeFilter.every((type) => pokemon.types.includes(type.value)));
 

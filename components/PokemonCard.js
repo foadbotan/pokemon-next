@@ -32,7 +32,7 @@ function Pokemon({ name, id, types }) {
           ))}
         </div>
         <p className="absolute right-2 top-1 text-xs" style={{ color }}>
-          #{`${id}`.padStart(3, "0")}
+          #{id}
         </p>
         <div className="p-2 pt-1">
           <Image src={`${IMAGES_URL}${id}.png`} width="300" height="300" alt={name} />
