@@ -7,9 +7,9 @@ export default function FilterControls(props) {
     props;
 
   return (
-    <div className="mx-auto flex w-full max-w-2xl flex-col items-center justify-center gap-2 xs:flex-row sm:my-5">
+    <div className="mx-auto flex w-full max-w-2xl flex-col justify-center gap-2 sm:my-5 sm:flex-row">
       <Search searchFilter={searchFilter} setSearchFilter={setSearchFilter} />
-      <div className="flex w-full gap-2">
+      <div className="flex gap-2">
         <TypeSelect allTypes={allTypes} typeFilter={typeFilter} setTypeFilter={setTypeFilter} />
         <ClearFilters clearFilters={clearFilters} />
       </div>

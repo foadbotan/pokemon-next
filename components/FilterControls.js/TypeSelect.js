@@ -10,27 +10,29 @@ export default function TypeSelect({ allTypes, typeFilter, setTypeFilter }) {
   const ref = useClickOutside(() => setIsDropdownOpen(false));
 
   return (
-    <div className="relative w-full" ref={ref} onClick={() => setIsDropdownOpen((prev) => !prev)}>
+    <div className="relative" ref={ref} onClick={() => setIsDropdownOpen((prev) => !prev)}>
       <div
-        className="flex w-full items-center justify-between gap-4 rounded-2xl border bg-white py-1 px-3 outline-2 -outline-offset-1 outline-blue-500 focus:outline"
+        className="flex items-center justify-between gap-4 rounded-full border-2 bg-white px-4 outline-none focus:border-blue-500"
         tabIndex={0}
       >
-        <div className="flex select-none items-center gap-2">
+        <div className="my-2 flex select-none items-center gap-2">
           <FilterIcon />
           <div>Type</div>
         </div>
-        <div className="flex gap-1">
-          {typeFilter.map(({ value }) => (
-            <TypeButton
-              key={value}
-              type={value}
-              className="p-1"
-              onClick={() => {
-                setTypeFilter(typeFilter.filter((type) => type.value !== value));
-              }}
-            />
-          ))}
-        </div>
+        {typeFilter.length > 0 && (
+          <div className="flex gap-1">
+            {typeFilter.map(({ value }) => (
+              <TypeButton
+                key={value}
+                type={value}
+                className="p-2"
+                onClick={() => {
+                  setTypeFilter(typeFilter.filter((type) => type.value !== value));
+                }}
+              />
+            ))}
+          </div>
+        )}
       </div>
       {isDropdownOpen && <TypeDropdown allTypes={allTypes} setTypeFilter={setTypeFilter} />}
     </div>

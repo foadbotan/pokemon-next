@@ -5,7 +5,7 @@ export default function TypeDropdown({ allTypes, setTypeFilter }) {
   const columnOne = allTypes.slice(0, half);
   const columnTwo = allTypes.slice(half);
   return (
-    <div className="absolute top-11 z-10 flex gap-2 rounded-3xl border bg-white p-4 shadow-xl">
+    <div className="absolute top-full z-10 mt-2 flex gap-2 rounded-3xl border bg-white p-4 shadow-xl sm:right-0">
       <DropdownColumn types={columnOne} setTypeFilter={setTypeFilter} />
       <DropdownColumn types={columnTwo} setTypeFilter={setTypeFilter} />
     </div>
