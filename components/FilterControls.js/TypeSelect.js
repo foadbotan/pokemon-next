@@ -12,10 +12,10 @@ export default function TypeSelect({ allTypes, typeFilter, setTypeFilter }) {
   return (
     <div className="relative" ref={ref} onClick={() => setIsDropdownOpen((prev) => !prev)}>
       <div
-        className="flex items-center justify-between gap-4 rounded-full border-2 bg-white px-4 outline-none focus:border-blue-500"
+        className="flex items-center justify-between gap-4 rounded-full border-2 bg-white px-3 outline-none focus:border-blue-500"
         tabIndex={0}
       >
-        <div className="my-2 flex select-none items-center gap-2">
+        <div className="my-1 flex select-none items-center gap-2">
           <FilterIcon />
           <div>Type</div>
         </div>
@@ -25,7 +25,7 @@ export default function TypeSelect({ allTypes, typeFilter, setTypeFilter }) {
               <TypeButton
                 key={value}
                 type={value}
-                className="p-2"
+                className="p-1"
                 onClick={() => {
                   setTypeFilter(typeFilter.filter((type) => type.value !== value));
                 }}

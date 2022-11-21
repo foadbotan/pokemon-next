@@ -9,7 +9,7 @@ export default function TypeButton({ onClick, type, label, className }) {
       style={{ backgroundColor: COLORS[type] }}
     >
       {label && label}
-      <div className="flex aspect-square w-4 justify-center">
+      <div className="flex aspect-square w-4 justify-center ">
         <Image src={`/icons/${type}.svg`} alt={type} width="16" height="16" />
       </div>
     </button>
