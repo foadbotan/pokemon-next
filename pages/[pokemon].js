@@ -175,7 +175,7 @@ export async function getServerSideProps({ params: { pokemon } }) {
     );
     const evolutionChain = getEvolutionChain(evolutionData);
 
-    // remove Pokemon in the evolution chain and are the current Pokemon
+    // remove Pokemon that are in the evolution chain and the current Pokemon
     const varieties = speciesData.varieties
       .map(({ pokemon }) => pokemon)
       .filter(
