@@ -15,6 +15,8 @@ import { IMAGES_URL } from "../components/PokemonCard";
 import { BsChevronLeft as LeftArrow } from "react-icons/bs";
 import { BsChevronRight as RightArrow } from "react-icons/bs";
 
+const LAST_POKEDEX_ID = 10248;
+
 export default function Pokemon(props) {
   const {
     color,
@@ -68,7 +70,7 @@ export default function Pokemon(props) {
             </a>
           </Link>
         )}
-        {nextPokemon < 1554 && (
+        {nextPokemon < LAST_POKEDEX_ID && (
           <Link href={`/${nextPokemon}`}>
             <a>
               <RightArrow size={30} className="absolute top-[50%] right-2 cursor-pointer" />
