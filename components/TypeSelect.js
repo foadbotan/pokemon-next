@@ -5,9 +5,15 @@ import useClickOutside from "/hooks/useClickOutside";
 import TypeDropdown from "./TypeDropdown";
 import TypeButton from "./TypeButton";
 
-export default function TypeSelect({ allTypes, typeFilter, setTypeFilter }) {
+export default function TypeSelect({ allTypes, store }) {
+  const [state, dispatch] = store;
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const ref = useClickOutside(() => setIsDropdownOpen(false));
+
+  function selectType(type) {
+    if (state.typeFilter.includes(type)) return;
+    dispatch({ typeFilter: [...state.typeFilter, type] });
+  }
 
   return (
     <div className="relative" ref={ref} onClick={() => setIsDropdownOpen((prev) => !prev)}>
@@ -19,15 +25,16 @@ export default function TypeSelect({ allTypes, typeFilter, setTypeFilter }) {
           <FilterIcon />
           <div>Type</div>
         </div>
-        {typeFilter.length > 0 && (
+
+        {state.typeFilter.length > 0 && (
           <div className="flex gap-1">
-            {typeFilter.map((type) => (
+            {state.typeFilter.map((type) => (
               <TypeButton
                 key={type}
                 type={type}
                 className="p-1"
                 onClick={() => {
-                  setTypeFilter((prevTypes) => prevTypes.filter((t) => t !== type));
+                  dispatch({ typeFilter: state.typeFilter.filter((t) => t !== type) });
                 }}
               />
             ))}
@@ -35,7 +42,7 @@ export default function TypeSelect({ allTypes, typeFilter, setTypeFilter }) {
         )}
       </div>
 
-      {isDropdownOpen && <TypeDropdown allTypes={allTypes} setTypeFilter={setTypeFilter} />}
+      {isDropdownOpen && <TypeDropdown allTypes={allTypes} handleClick={selectType} />}
     </div>
   );
 }

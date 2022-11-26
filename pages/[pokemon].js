@@ -33,9 +33,10 @@ export default function Pokemon(props) {
     height,
     evolutionChain,
     varieties,
-    setTypeFilter,
-    setSearchFilter,
+    store,
   } = props;
+
+  const [state, dispatch] = store;
 
   const isDark = color === "white";
 
@@ -87,10 +88,7 @@ export default function Pokemon(props) {
                 type={type}
                 label={type}
                 className="px-3 py-1.5 text-xs"
-                onClick={() => {
-                  setSearchFilter("");
-                  setTypeFilter([{ value: type, label: capitalize(type) }]);
-                }}
+                onClick={() => dispatch({ typeFilter: [type], searchFilter: "" })}
               />
             </a>
           </Link>

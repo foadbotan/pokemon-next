@@ -1,24 +1,17 @@
-import { useState } from "react";
+import { useReducer } from "react";
 import "../styles/globals.css";
 
+const reducer = (state, action) => ({ ...state, ...action });
+export const initialState = {
+  searchFilter: "",
+  typeFilter: [],
+  numberOfPokemonVisible: 20,
+};
+
 function MyApp({ Component, pageProps }) {
-  const [searchFilter, setSearchFilter] = useState("");
-  const [typeFilter, setTypeFilter] = useState([]);
-  const [numberOfPokemonVisible, setNumberOfPokemonVisible] = useState(10);
+  const store = useReducer(reducer, initialState);
 
-  const props = {
-    ...pageProps,
-
-    searchFilter,
-    typeFilter,
-    numberOfPokemonVisible,
-
-    setSearchFilter,
-    setTypeFilter,
-    setNumberOfPokemonVisible,
-  };
-
-  return <Component {...props} />;
+  return <Component {...pageProps} store={store} />;
 }
 
 export default MyApp;

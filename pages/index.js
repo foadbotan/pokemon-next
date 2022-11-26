@@ -6,44 +6,32 @@ import TypeSelect from "/components/TypeSelect";
 import Error from "/components/errors/Error";
 import useInfiniteScroll from "/hooks/useInfiniteScroll";
 import { AiOutlineClose as CloseIcon } from "react-icons/ai";
+import { initialState } from "./_app";
 
 export const BASE_URL = "https://pokeapi.co/api/v2";
 const POKEMON_URL = `${BASE_URL}/pokemon/?limit=-1`;
 const TYPES_URL = `${BASE_URL}/type`;
 
-export default function Home(props) {
+export default function Home({ allPokemon, allTypes, error, store }) {
+  const [state, dispatch] = store;
   const infiniteScrollRef = useInfiniteScroll(displayMorePokemon);
-  const {
-    allPokemon,
-    allTypes,
-    error,
-
-    searchFilter,
-    typeFilter,
-    numberOfPokemonVisible,
-
-    setSearchFilter,
-    setTypeFilter,
-    setNumberOfPokemonVisible,
-  } = props;
 
   if (error) return <Error error={error} />;
 
   const filteredPokemon = allPokemon
     .filter(
-      ({ name, id }) => name.includes(searchFilter.toLowerCase()) || id.endsWith(searchFilter)
+      ({ name, id }) =>
+        name.includes(state.searchFilter.toLowerCase()) || id.endsWith(state.searchFilter)
     )
-    .filter((pokemon) => typeFilter.every((type) => pokemon.types.includes(type)));
+    .filter((pokemon) => state.typeFilter.every((type) => pokemon.types.includes(type)));
 
   function displayMorePokemon() {
-    if (numberOfPokemonVisible > filteredPokemon.length) return;
-    setNumberOfPokemonVisible((prev) => prev + 10);
+    if (state.numberOfPokemonVisible > filteredPokemon.length) return;
+    dispatch({ numberOfPokemonVisible: state.numberOfPokemonVisible + 20 });
   }
 
   function clearFilters() {
-    setSearchFilter("");
-    setTypeFilter([]);
-    setNumberOfPokemonVisible(0);
+    dispatch(initialState);
   }
 
   return (
@@ -61,9 +49,9 @@ export default function Home(props) {
       </header>
       <main className="container mx-auto flex flex-col gap-4">
         <div className="mx-auto flex w-full max-w-2xl flex-col justify-center gap-2 sm:my-5 sm:flex-row">
-          <Search searchFilter={searchFilter} setSearchFilter={setSearchFilter} />
+          <Search store={store} />
           <div className="flex items-center gap-2">
-            <TypeSelect allTypes={allTypes} typeFilter={typeFilter} setTypeFilter={setTypeFilter} />
+            <TypeSelect allTypes={allTypes} store={store} />
             <button
               className="flex items-center gap-2 rounded-full bg-red-500 px-4 py-1.5 text-white hover:bg-red-600"
               onClick={clearFilters}
@@ -75,7 +63,7 @@ export default function Home(props) {
         </div>
 
         <section className="flex w-full flex-wrap justify-center gap-2 lg:gap-4">
-          {filteredPokemon.slice(0, numberOfPokemonVisible).map((pokemon) => (
+          {filteredPokemon.slice(0, state.numberOfPokemonVisible).map((pokemon) => (
             <PokemonCard key={pokemon.name} {...pokemon} />
           ))}
         </section>
