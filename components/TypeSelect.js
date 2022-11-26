@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { BsFilter as FilterIcon } from "react-icons/bs";
 import useClickOutside from "/hooks/useClickOutside";
-import TypeDropdown from "./TypeDropdown";
 import TypeButton from "./TypeButton";
 
 export default function TypeSelect({ allTypes, store }) {
@@ -10,7 +9,7 @@ export default function TypeSelect({ allTypes, store }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const ref = useClickOutside(() => setIsDropdownOpen(false));
 
-  function selectType(type) {
+  function handleSelectType(type) {
     if (state.typeFilter.includes(type)) return;
     dispatch({ typeFilter: [...state.typeFilter, type] });
   }
@@ -42,7 +41,19 @@ export default function TypeSelect({ allTypes, store }) {
         )}
       </div>
 
-      {isDropdownOpen && <TypeDropdown allTypes={allTypes} handleClick={selectType} />}
+      {isDropdownOpen && (
+        <div className="absolute top-full z-10 mt-2 grid w-72 grid-cols-2 gap-2 rounded-3xl border bg-white p-4 shadow-xl sm:right-0">
+          {allTypes.map((type) => (
+            <TypeButton
+              key={type}
+              type={type}
+              label={type}
+              className="py-1 px-3"
+              onClick={() => handleSelectType(type)}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
