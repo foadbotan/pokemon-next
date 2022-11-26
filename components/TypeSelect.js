@@ -21,19 +21,20 @@ export default function TypeSelect({ allTypes, typeFilter, setTypeFilter }) {
         </div>
         {typeFilter.length > 0 && (
           <div className="flex gap-1">
-            {typeFilter.map(({ value }) => (
+            {typeFilter.map((type) => (
               <TypeButton
-                key={value}
-                type={value}
+                key={type}
+                type={type}
                 className="p-1"
                 onClick={() => {
-                  setTypeFilter(typeFilter.filter((type) => type.value !== value));
+                  setTypeFilter((prevTypes) => prevTypes.filter((t) => t !== type));
                 }}
               />
             ))}
           </div>
         )}
       </div>
+
       {isDropdownOpen && <TypeDropdown allTypes={allTypes} setTypeFilter={setTypeFilter} />}
     </div>
   );
