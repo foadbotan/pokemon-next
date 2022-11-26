@@ -3,9 +3,9 @@ import Image from "next/image";
 import PokemonCard from "/components/PokemonCard";
 import Search from "/components/Search";
 import TypeSelect from "/components/TypeSelect";
-import ClearFilters from "/components/ClearFilters";
 import Error from "/components/errors/Error";
 import useInfiniteScroll from "/hooks/useInfiniteScroll";
+import { AiOutlineClose as CloseIcon } from "react-icons/ai";
 
 export const BASE_URL = "https://pokeapi.co/api/v2";
 const POKEMON_URL = `${BASE_URL}/pokemon/?limit=-1`;
@@ -64,7 +64,13 @@ export default function Home(props) {
           <Search searchFilter={searchFilter} setSearchFilter={setSearchFilter} />
           <div className="flex items-center gap-2">
             <TypeSelect allTypes={allTypes} typeFilter={typeFilter} setTypeFilter={setTypeFilter} />
-            <ClearFilters clearFilters={clearFilters} />
+            <button
+              className="flex items-center gap-2 rounded-full bg-red-500 px-4 py-1.5 text-white hover:bg-red-600"
+              onClick={clearFilters}
+            >
+              <CloseIcon size="16" />
+              <div>Clear</div>
+            </button>
           </div>
         </div>
 
