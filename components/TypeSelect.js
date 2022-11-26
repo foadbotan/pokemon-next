@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import TypeButton from "../TypeButton";
 import { BsFilter as FilterIcon } from "react-icons/bs";
-import useClickOutside from "../../hooks/useClickOutside";
+import useClickOutside from "/hooks/useClickOutside";
 import TypeDropdown from "./TypeDropdown";
+import TypeButton from "./TypeButton";
 
 export default function TypeSelect({ allTypes, typeFilter, setTypeFilter }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);

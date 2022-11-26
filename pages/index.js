@@ -1,11 +1,12 @@
-import PokemonCard from "../components/PokemonCard";
-import useInfiniteScroll from "../hooks/useInfiniteScroll";
-import Error from "../components/errors/Error";
-import { capitalize } from "../utils";
 import Head from "next/head";
 import Image from "next/image";
-import FilterControls from "../components/FilterControls.js";
-import ErrorSearchEmpty from "../components/errors/ErrorSearchEmpty";
+import PokemonCard from "/components/PokemonCard";
+import Search from "/components/Search";
+import TypeSelect from "/components/TypeSelect";
+import ClearFilters from "/components/ClearFilters";
+import Error from "/components/errors/Error";
+import ErrorSearchEmpty from "/components/errors/ErrorSearchEmpty";
+import useInfiniteScroll from "/hooks/useInfiniteScroll";
 
 export const BASE_URL = "https://pokeapi.co/api/v2";
 const POKEMON_URL = `${BASE_URL}/pokemon/?limit=-1`;
@@ -33,7 +34,7 @@ export default function Home(props) {
     .filter(
       ({ name, id }) => name.includes(searchFilter.toLowerCase()) || id.endsWith(searchFilter)
     )
-    .filter((pokemon) => typeFilter.every((type) => pokemon.types.includes(type.value)));
+    .filter((pokemon) => typeFilter.every((type) => pokemon.types.includes(type)));
 
   function displayMorePokemon() {
     if (numberOfPokemonVisible > filteredPokemon.length) return;
@@ -60,14 +61,13 @@ export default function Home(props) {
         <Image src="/pokemon-logo.svg" width="300" height="50" alt="Pokemon logo" />
       </header>
       <main className="container mx-auto flex flex-col gap-4">
-        <FilterControls
-          searchFilter={searchFilter}
-          setSearchFilter={setSearchFilter}
-          typeFilter={typeFilter}
-          setTypeFilter={setTypeFilter}
-          allTypes={allTypes}
-          clearFilters={clearFilters}
-        />
+        <div className="mx-auto flex w-full max-w-2xl flex-col justify-center gap-2 sm:my-5 sm:flex-row">
+          <Search searchFilter={searchFilter} setSearchFilter={setSearchFilter} />
+          <div className="flex items-center gap-2">
+            <TypeSelect allTypes={allTypes} typeFilter={typeFilter} setTypeFilter={setTypeFilter} />
+            <ClearFilters clearFilters={clearFilters} />
+          </div>
+        </div>
 
         <section className="flex w-full flex-wrap justify-center gap-2 lg:gap-4">
           {filteredPokemon.slice(0, numberOfPokemonVisible).map((pokemon) => (
@@ -112,8 +112,8 @@ export async function getStaticProps() {
       props: {
         allPokemon,
         allTypes: allTypes
-          .filter(({ type }) => type !== "unknown" && type !== "shadow") // remove unused pokemon types "shadow" and "unknown"
-          .map(({ type }) => ({ value: type, label: capitalize(type) })), // format type options for react-select
+          .map(({ type }) => type)
+          .filter((type) => type !== "unknown" && type !== "shadow"), // remove unused pokemon types "shadow" and "unknown"
       },
     };
   } catch (error) {
