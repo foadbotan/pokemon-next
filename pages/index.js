@@ -5,7 +5,6 @@ import Search from "/components/Search";
 import TypeSelect from "/components/TypeSelect";
 import ClearFilters from "/components/ClearFilters";
 import Error from "/components/errors/Error";
-import ErrorSearchEmpty from "/components/errors/ErrorSearchEmpty";
 import useInfiniteScroll from "/hooks/useInfiniteScroll";
 
 export const BASE_URL = "https://pokeapi.co/api/v2";
@@ -75,7 +74,9 @@ export default function Home(props) {
           ))}
         </section>
 
-        {filteredPokemon.length === 0 && <ErrorSearchEmpty clearFilters={clearFilters} />}
+        {filteredPokemon.length === 0 && (
+          <h1 className="text-center text-2xl font-bold">No Pokemon found</h1>
+        )}
 
         <div ref={infiniteScrollRef}></div>
       </main>
