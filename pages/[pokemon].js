@@ -1,20 +1,22 @@
+import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Head from "next/head";
 import Error404 from "/components/errors/Error404";
 import { COLORS } from "/constants/colors";
 import { capitalize } from "/utils";
-import NavbarPokemonPage from "/components/Navbar/NavbarPokemonPage";
 import StatsBar from "../components/StatsBar";
 import Link from "next/link";
 import PokemonCard from "../components/PokemonCard";
 import TypeButton from "../components/TypeButton";
+import { useSpeechSynthesis } from "react-speech-kit";
 
 import { BASE_URL } from "/pages/index";
 import { IMAGES_URL } from "../components/PokemonCard";
 import { BsChevronLeft as LeftArrow } from "react-icons/bs";
 import { BsChevronRight as RightArrow } from "react-icons/bs";
 import { IoArrowBackOutline as BackArrow } from "react-icons/io5";
+import { MdRecordVoiceOver as VoiceIcon } from "react-icons/md";
 
 const LAST_POKEDEX_ID = 10248;
 
@@ -36,10 +38,9 @@ export default function Pokemon(props) {
     varieties,
     store,
   } = props;
-
   const [state, dispatch] = store;
-
   const isDark = color === "white";
+  const { speak, voices } = useSpeechSynthesis();
 
   const router = useRouter();
   const query = router.query;
@@ -56,18 +57,30 @@ export default function Pokemon(props) {
         <title>{name}</title>
       </Head>
 
-      <header className="container mx-auto py-5 sm:py-8">
-        <div
-          className={`flex items-center justify-between ${isDark ? "text-black" : "text-white"}`}
-        >
-          <Link href="/">
-            <div className="flex cursor-pointer items-center gap-2 transition hover:text-black hover:opacity-60">
-              <BackArrow size="30" />
-              <p className="text-3xl font-black">{name}</p>
-            </div>
-          </Link>
-          <p className="font-bold">#{`${id}`.padStart(3, "0")}</p>
-        </div>
+      <header
+        className={`container mx-auto flex items-center justify-between py-5 sm:py-8 ${
+          isDark ? "text-black" : "text-white"
+        }`}
+      >
+        <Link href="/">
+          <a>
+            <BackArrow
+              size="30"
+              className="cursor-pointer transition hover:text-black hover:opacity-60"
+            />
+          </a>
+        </Link>
+        <p className="flex items-center gap-2 text-3xl font-black">
+          {name}
+          <button
+            className=" cursor-pointer rounded-full border-white bg-white bg-opacity-0 p-2 hover:bg-opacity-25"
+            onClick={() => speak({ text: name, voice: voices[17] })}
+          >
+            <VoiceIcon size={16} />
+          </button>
+        </p>
+
+        <p className="font-bold">#{`${id}`.padStart(3, "0")}</p>
       </header>
 
       <section className="container relative my-4 mx-auto">
@@ -135,8 +148,16 @@ export default function Pokemon(props) {
         <div className="flex flex-wrap justify-center gap-8 sm:flex-row-reverse">
           <div className="flex max-w-[400px] flex-col justify-between gap-4">
             <div>
-              <h3 className="py-1 font-bold">Description</h3>
-              <p className="font-light">{capitalize(descriptions[0])}</p>
+              <h3 className="flex items-center gap-2 py-1 font-bold">
+                Description
+                <button
+                  className=" cursor-pointer rounded-full border-white bg-white bg-opacity-0 p-2 hover:bg-opacity-25"
+                  onClick={() => speak({ text: descriptions[0], voice: voices[17] })}
+                >
+                  <VoiceIcon size={16} />
+                </button>
+              </h3>
+              <p className="font-light">{descriptions[0]}</p>
             </div>
 
             <div className="flex flex-col justify-between">
@@ -149,10 +170,16 @@ export default function Pokemon(props) {
                 <span className="font-light">{height}cm</span>
               </p>
               <p>
-                <span className="mr-2 font-bold">Abilities:</span>
-                <span className="font-light">
-                  {abilities.map((ability) => capitalize(ability)).join(", ")}
+                <span className="mr-2 flex items-center gap-2 font-bold">
+                  Abilities:
+                  <button
+                    className=" cursor-pointer rounded-full border-white bg-white bg-opacity-0 p-2 hover:bg-opacity-25"
+                    onClick={() => speak({ text: abilities, voice: voices[17] })}
+                  >
+                    <VoiceIcon size={16} />
+                  </button>
                 </span>
+                <span className="font-light">{abilities}</span>
               </p>
             </div>
           </div>
@@ -205,7 +232,7 @@ export async function getServerSideProps({ params: { pokemon } }) {
         japaneseName: speciesData.names.find((name) => name.language.name === "ja").name,
         color: speciesData.color.name,
         name: capitalize(pokemonData.name),
-        abilities: pokemonData.abilities.map(({ ability }) => ability.name),
+        abilities: pokemonData.abilities.map(({ ability }) => capitalize(ability.name)).join(", "),
         types: pokemonData.types.map(({ type }) => type.name),
         image: pokemonData.sprites.other["official-artwork"].front_default,
         moves: pokemonData.moves.map(({ move }) => move.name),
@@ -228,7 +255,7 @@ export async function getServerSideProps({ params: { pokemon } }) {
       },
     };
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return {
       props: {
         error: "Pokemon not found",
