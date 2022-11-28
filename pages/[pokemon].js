@@ -9,7 +9,6 @@ import StatsBar from "../components/StatsBar";
 import Link from "next/link";
 import PokemonCard from "../components/PokemonCard";
 import TypeButton from "../components/TypeButton";
-import { useSpeechSynthesis } from "react-speech-kit";
 
 import { BASE_URL } from "/pages/index";
 import { IMAGES_URL } from "../components/PokemonCard";
@@ -40,13 +39,20 @@ export default function Pokemon(props) {
   } = props;
   const [state, dispatch] = store;
   const isDark = color === "white";
-  const { speak, voices } = useSpeechSynthesis();
 
   const router = useRouter();
   const query = router.query;
   if (error) return <Error404 error={error} query={query} />;
   const nextPokemon = parseInt(id) + 1;
   const previousPokemon = parseInt(id) - 1;
+
+  function speak(text) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-AU";
+    utterance.pitch = 0.8;
+    utterance.rate = 0.8;
+    speechSynthesis.speak(utterance);
+  }
 
   return (
     <div
@@ -63,18 +69,16 @@ export default function Pokemon(props) {
         }`}
       >
         <Link href="/">
-          <a>
-            <BackArrow
-              size="30"
-              className="cursor-pointer transition hover:text-black hover:opacity-60"
-            />
+          <a className="flex cursor-pointer items-center gap-2 transition hover:text-black hover:opacity-60">
+            <BackArrow size="20" />
+            <p className="font-bold uppercase">Pokédex</p>
           </a>
         </Link>
         <p className="flex items-center gap-2 text-3xl font-black">
           {name}
           <button
             className=" cursor-pointer rounded-full border-white bg-white bg-opacity-0 p-2 hover:bg-opacity-25"
-            onClick={() => speak({ text: name, voice: voices[17] })}
+            onClick={() => speak(name)}
           >
             <VoiceIcon size={16} />
           </button>
@@ -152,7 +156,7 @@ export default function Pokemon(props) {
                 Description
                 <button
                   className=" cursor-pointer rounded-full border-white bg-white bg-opacity-0 p-2 hover:bg-opacity-25"
-                  onClick={() => speak({ text: descriptions[0], voice: voices[17] })}
+                  onClick={() => speak(descriptions[0])}
                 >
                   <VoiceIcon size={16} />
                 </button>
@@ -174,7 +178,7 @@ export default function Pokemon(props) {
                   Abilities:
                   <button
                     className=" cursor-pointer rounded-full border-white bg-white bg-opacity-0 p-2 hover:bg-opacity-25"
-                    onClick={() => speak({ text: abilities, voice: voices[17] })}
+                    onClick={() => speak(abilities)}
                   >
                     <VoiceIcon size={16} />
                   </button>
