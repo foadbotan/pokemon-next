@@ -14,6 +14,7 @@ import { BASE_URL } from "/pages/index";
 import { IMAGES_URL } from "../components/PokemonCard";
 import { BsChevronLeft as LeftArrow } from "react-icons/bs";
 import { BsChevronRight as RightArrow } from "react-icons/bs";
+import { IoArrowBackOutline as BackArrow } from "react-icons/io5";
 
 const LAST_POKEDEX_ID = 10248;
 
@@ -55,7 +56,19 @@ export default function Pokemon(props) {
         <title>{name}</title>
       </Head>
 
-      <NavbarPokemonPage name={name} id={id} isDark={isDark} />
+      <header className="container mx-auto py-5 sm:py-8">
+        <div
+          className={`flex items-center justify-between ${isDark ? "text-black" : "text-white"}`}
+        >
+          <Link href="/">
+            <div className="flex cursor-pointer items-center gap-2 transition hover:text-black hover:opacity-60">
+              <BackArrow size="30" />
+              <p className="text-3xl font-black">{name}</p>
+            </div>
+          </Link>
+          <p className="font-bold">#{`${id}`.padStart(3, "0")}</p>
+        </div>
+      </header>
 
       <section className="container relative my-4 mx-auto">
         <p className="absolute left-0 w-full text-center text-[min(15vw,8rem)] font-black leading-none text-black opacity-70">
