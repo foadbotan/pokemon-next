@@ -19,10 +19,10 @@ export default function Home({ allPokemon, allTypes, error, store }) {
   if (error) return <Error error={error} />;
 
   const filteredPokemon = allPokemon
-    .filter(
-      ({ name, id }) =>
-        name.includes(state.searchFilter.toLowerCase()) || id.endsWith(state.searchFilter)
-    )
+    .filter(({ name, id }) => {
+      const searchTerms = state.searchFilter.toLowerCase().trim().split(" ");
+      return searchTerms.every((search) => name.includes(search) || id.includes(search));
+    })
     .filter((pokemon) => state.typeFilter.every((type) => pokemon.types.includes(type)));
 
   function displayMorePokemon() {
