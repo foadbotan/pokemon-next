@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Head from "next/head";
@@ -16,6 +15,8 @@ import { BsChevronLeft as LeftArrow } from "react-icons/bs";
 import { BsChevronRight as RightArrow } from "react-icons/bs";
 import { IoArrowBackOutline as BackArrow } from "react-icons/io5";
 import { MdRecordVoiceOver as VoiceIcon } from "react-icons/md";
+import { BsLightningFill as ThunderIcon } from "react-icons/bs";
+import { IoBook as BookIcon } from "react-icons/io5";
 
 const LAST_POKEDEX_ID = 10248;
 
@@ -49,8 +50,6 @@ export default function Pokemon(props) {
   function speak(text) {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = "en-AU";
-    utterance.pitch = 0.8;
-    utterance.rate = 0.8;
     speechSynthesis.speak(utterance);
   }
 
@@ -70,20 +69,10 @@ export default function Pokemon(props) {
       >
         <Link href="/">
           <a className="flex cursor-pointer items-center gap-2 transition hover:text-black hover:opacity-60">
-            <BackArrow size="20" />
-            <p className="font-bold uppercase">Pokédex</p>
+            <BackArrow size="24" />
+            <p className="text-3xl font-black">{name}</p>
           </a>
         </Link>
-        <p className="flex items-center gap-2 text-3xl font-black">
-          {name}
-          <button
-            className=" cursor-pointer rounded-full border-white bg-white bg-opacity-0 p-2 hover:bg-opacity-25"
-            onClick={() => speak(name)}
-          >
-            <VoiceIcon size={16} />
-          </button>
-        </p>
-
         <p className="font-bold">#{`${id}`.padStart(3, "0")}</p>
       </header>
 
@@ -152,15 +141,7 @@ export default function Pokemon(props) {
         <div className="flex flex-wrap justify-center gap-8 sm:flex-row-reverse">
           <div className="flex max-w-[400px] flex-col justify-between gap-4">
             <div>
-              <h3 className="flex items-center gap-2 py-1 font-bold">
-                Description
-                <button
-                  className=" cursor-pointer rounded-full border-white bg-white bg-opacity-0 p-2 hover:bg-opacity-25"
-                  onClick={() => speak(descriptions[0])}
-                >
-                  <VoiceIcon size={16} />
-                </button>
-              </h3>
+              <h3 className="py-1 font-bold">Description</h3>
               <p className="font-light">{descriptions[0]}</p>
             </div>
 
@@ -174,15 +155,7 @@ export default function Pokemon(props) {
                 <span className="font-light">{height}cm</span>
               </p>
               <p>
-                <span className="mr-2 flex items-center gap-2 font-bold">
-                  Abilities:
-                  <button
-                    className=" cursor-pointer rounded-full border-white bg-white bg-opacity-0 p-2 hover:bg-opacity-25"
-                    onClick={() => speak(abilities)}
-                  >
-                    <VoiceIcon size={16} />
-                  </button>
-                </span>
+                <span className="mr-2 font-bold">Abilities:</span>
                 <span className="font-light">{abilities}</span>
               </p>
             </div>
@@ -191,6 +164,45 @@ export default function Pokemon(props) {
             {stats.map((stat) => (
               <StatsBar key={stat.name} stat={stat} isDark={isDark} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="container my-4 mx-auto">
+        <h2 className="my-2 text-xl font-bold sm:m-10">Audio</h2>
+        <div className="flex justify-evenly gap-2 p-2">
+          <div className="flex flex-col items-center gap-2">
+            <button
+              className={`cursor-pointer rounded-full border bg-opacity-0 p-4 hover:bg-opacity-25 ${
+                isDark ? "border-black bg-black" : "border-white bg-white"
+              }`}
+              onClick={() => speak(name)}
+            >
+              <VoiceIcon size={30} />
+            </button>
+            <p>Name</p>
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <button
+              className={`cursor-pointer rounded-full border bg-opacity-0 p-4 hover:bg-opacity-25 ${
+                isDark ? "border-black bg-black" : "border-white bg-white"
+              }`}
+              onClick={() => speak(descriptions[0])}
+            >
+              <BookIcon size={30} />
+            </button>
+            <p>Description</p>
+          </div>
+          <div className="flex flex-col items-center gap-2">
+            <button
+              className={`cursor-pointer rounded-full border bg-opacity-0 p-4 hover:bg-opacity-25 ${
+                isDark ? "border-black bg-black" : "border-white bg-white"
+              }`}
+              onClick={() => speak(abilities)}
+            >
+              <ThunderIcon size={30} />
+            </button>
+            <p>Abilities</p>
           </div>
         </div>
       </section>
