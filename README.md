@@ -2,7 +2,7 @@
 
 I built this app with **React**, **Next.js** and **Tailwind**, using data fetched from an external API.
 
-The site is hosted on Netlify. You can view the live site [here](https://pokedex-next-app.netlify.app/).
+The site is hosted on Netlify. You can view the live site https://www.bespokedex.com/.
 
 ### Build Setup
 
