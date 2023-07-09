@@ -4,6 +4,14 @@ I built this app with **React**, **Next.js** and **Tailwind**, using data fetche
 
 The site is hosted on Netlify. You can view the live site https://www.bespokedex.com/.
 
+  <div align="center">
+    <img src="./screenshots/screenshot-home.png" width="600"/>
+  </div>
+  <div align="center">
+    <img src="./screenshots/screenshot-page-top.png" width="300"/>
+    <img src="./screenshots/screenshot-page-bottom.png" width="300"/>
+  </div>
+
 ### Build Setup
 
 The home page contains a list of all Pokemon, and each Pokemon has its own details page.
@@ -22,14 +30,6 @@ Given the large number of Pokemon, using a similar SSG approach for the individu
 
 - Optimizing the number of API calls from 1,155 to 22
 - Creating a custom useInfiniteScroll hook
-
-  <div align="center">
-    <img src="./screenshots/screenshot-home.png" width="600"/>
-  </div>
-  <div align="center">
-    <img src="./screenshots/screenshot-page-top.png" width="300"/>
-    <img src="./screenshots/screenshot-page-bottom.png" width="300"/>
-  </div>
 
 † I understand that infinite scrolling is a nightmare for performance without windowing. Given the nature of this project, I didn't feel it was necessary.
 
