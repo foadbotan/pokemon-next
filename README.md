@@ -29,8 +29,7 @@ Given the large number of Pokemon, using a similar SSG approach for the individu
 ### Challenges overcome:
 
 - Optimizing the number of API calls from 1,155 to 22
-- Creating a custom useInfiniteScroll hook
+- Creating a custom useInfiniteScroll hook *
 
-† I understand that infinite scrolling is a nightmare for performance without windowing. Given the nature of this project, I didn't feel it was necessary.
-
+* I understand that infinite scrolling is a nightmare for performance without windowing. Given the nature of this project, I didn't feel it was necessary.
 In a larger project, with actual users, I would implement windowing functionality or use something like [react-window](https://react-window.vercel.app/#/examples/list/fixed-size).
