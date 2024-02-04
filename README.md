@@ -1,4 +1,4 @@
-# Pokedex
+# Pokédex
 
 I built this app with **React**, **Next.js** and **Tailwind**, using data fetched from an external API.
 
