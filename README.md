@@ -11,6 +11,9 @@ The site is hosted on Netlify. You can view the live site https://www.bespokedex
     <img src="./screenshots/screenshot-page-top.png" width="300"/>
     <img src="./screenshots/screenshot-page-bottom.png" width="300"/>
   </div>
+    <div align="center">
+    <img src="./screenshots/lighthouse-scores.png" width="600"/>
+  </div>
 
 ### Build Setup
 
